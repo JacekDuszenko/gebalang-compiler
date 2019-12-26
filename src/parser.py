@@ -1,15 +1,5 @@
 import ply.yacc as yacc
-from src.tokrules import tokens
-
-# ordered from lowest to highest precedence
-precedence = (
-    ('left', 'PLUS', 'MINUS'),
-    ('left, TIMES', 'DIV', 'MOD')
-)
+import src.parserules as parserules
 
 
-def p_plus(p):
-    """expression : value PLUS value"""
-    p[0] = 10
-    pass
-
+parser = yacc.yacc(module=parserules)

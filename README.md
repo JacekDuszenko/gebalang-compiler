@@ -3,10 +3,10 @@
 Compiler of a simple imperative programming language written in Python.
 
 ## Things to install
-TODO
+TODO 
 
 ## How to run
-`python kompilator INFILE OUTFILE`
+`python src/compiler.py INFILE OUTFILE`
 
 
 
