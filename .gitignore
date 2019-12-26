@@ -1,3 +1,11 @@
+ext/vm/lexer.cc
+ext/vm/lexer.o
+ext/vm/main.o
+ext/vm/mw.o
+ext/vm/parser.cc
+ext/vm/parser.hh
+ext/vm/parser.o
+.idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

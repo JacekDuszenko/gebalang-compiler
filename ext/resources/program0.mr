@@ -1,0 +1,19 @@
+# zapis binarny liczby
+SUB 0
+DEC
+STORE 3		# p(3) = 1
+GET
+JNEG 16		# nie if
+STORE 1		# p(1) = a
+JZERO 16	# ! warunek while
+SHIFT 3
+STORE 2		# p(2) = a/2
+LOAD 1
+SUB 2
+SUB 2
+PUT		# wypisz a-2(a/2)
+LOAD 2
+STORE 1		# a = a/2
+JUMP 6		# koniec while
+HALT
+

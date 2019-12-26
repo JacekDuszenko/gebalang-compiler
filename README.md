@@ -1,2 +1,13 @@
-# gebalang-compiler
-Compiler of a simple imperative language written with Python PLY
+# gębalang-compiler
+
+Compiler of a simple imperative programming language written in Python.
+
+## Things to install
+TODO
+
+## How to run
+`python kompilator INFILE OUTFILE`
+
+
+
+

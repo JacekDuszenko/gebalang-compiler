@@ -1,0 +1,2 @@
+class GebalangLexException(BaseException):
+    pass
