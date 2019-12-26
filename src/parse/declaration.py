@@ -1,4 +1,4 @@
-from src.ast_model.declaration import *
+from src.ast.declaration import *
 
 
 def create_declarations_with_variable(p):

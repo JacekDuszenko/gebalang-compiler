@@ -1,4 +1,4 @@
-from src.ast_model.command import Commands
+from src.ast.command import Commands
 
 
 def create_commands(p):
@@ -11,4 +11,3 @@ def append_command(p):
     cmds = p[1]
     cmds.add_command(p[2])
     p[0] = cmds
-

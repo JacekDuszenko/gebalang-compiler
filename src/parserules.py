@@ -1,8 +1,8 @@
-from src.ast_model.command import WhileCommand
-from src.ast_model.program import *
+from src.ast.program import *
 from src.parse.cmd import *
 from src.parse.commands import *
 from src.parse.declaration import *
+from src.parse.expr_cond import *
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -81,7 +81,61 @@ def p_command_while(p):
     """
     create_while_command(p)
 
+
 def p_command_do_while(p):
     """
     command : DO commands WHILE condition ENDDO
     """
+    create_do_while_command(p)
+
+
+def p_command_for_up_to(p):
+    """
+    command : FOR ID FROM value TO value DO commands ENDFOR
+    """
+    create_for_up_to_command(p)
+
+
+def p_command_for_down_to(p):
+    """
+    command : FOR ID FROM value DOWNTO value DO commands ENDFOR
+    """
+    create_for_down_to_command(p)
+
+
+def p_command_read(p):
+    """
+    command : READ identifier SEMICOLON
+    """
+    create_read_command(p)
+
+
+def p_command_write(p):
+    """
+    command : WRITE value SEMICOLON
+    """
+    create_write_command(p)
+
+
+def p_expression(p):
+    """
+    expression : value PLUS value
+               | value MINUS value
+               | value TIMES value
+               | value DIV value
+               | value MOD value
+    """
+    create_binary_expression(p)
+
+
+def p_condition(p):
+    """
+    condition : value EQ value
+              | value NEQ value
+              | value LE value
+              | value GE value
+              | value LEQ value
+              | value GEQ value
+    """
+    create_binary_conditon(p)
+
