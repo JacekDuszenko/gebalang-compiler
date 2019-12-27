@@ -3,10 +3,13 @@ from src.parse.cmd import *
 from src.parse.commands import *
 from src.parse.declaration import *
 from src.parse.expr_cond import *
+from src.parse.val_ident import *
+from src.util import error
+from src.tokrules import tokens #this import has to stay because of ply introspection when it comes to token discovery
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
-    ('left, TIMES', 'DIV', 'MOD')
+    ('left', 'TIMES', 'DIV', 'MOD')
 )
 
 
@@ -119,13 +122,17 @@ def p_command_write(p):
 
 def p_expression(p):
     """
-    expression : value PLUS value
+    expression : value
+               | value PLUS value
                | value MINUS value
                | value TIMES value
                | value DIV value
                | value MOD value
     """
-    create_binary_expression(p)
+    if len(p) == 4:
+        create_binary_expression(p)
+    else:
+        create_unary_expression(p)
 
 
 def p_condition(p):
@@ -139,3 +146,35 @@ def p_condition(p):
     """
     create_binary_conditon(p)
 
+
+def p_number(p):
+    """
+    value : NUM
+          | identifier
+    """
+    create_value(p)
+
+
+def p_identifier_variable(p):
+    """
+    identifier : ID
+    """
+    create_identifier_variable(p)
+
+
+def p_identifier_array_variable(p):
+    """
+    identifier : ID LP ID RP
+    """
+    create_identifier_array_variable(p)
+
+
+def p_identifier_array_num(p):
+    """
+    identifier : ID LP NUM RP
+    """
+    create_identifier_array_number(p)
+
+
+def p_error(p):
+    error(p.lineno, "Unknown input {}".format(p.value))

@@ -1,6 +1,6 @@
 import pytest
 
-from src.error.GebalangLexException import GebalangLexException
+from src.error.GebalangException import GebalangException
 from src.lexer import lexer
 from test.utils import *
 
@@ -42,5 +42,5 @@ class TestSanityCheck:
         
         END
         """
-        with pytest.raises(GebalangLexException):
+        with pytest.raises(GebalangException):
             lex_to_token_list(lexer, simple_program_string)

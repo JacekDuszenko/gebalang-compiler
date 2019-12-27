@@ -9,7 +9,7 @@ def create_declarations_with_variable(p):
 
 def append_variable_declaration(p):
     decs = p[1]
-    decs.add_declaration(VariableDeclaration(id=p[2]))
+    decs.add_declaration(VariableDeclaration(id=p[3]))
     p[0] = decs
 
 

@@ -1,3 +1,4 @@
+src/parser.out
 ext/vm/lexer.cc
 ext/vm/lexer.o
 ext/vm/main.o

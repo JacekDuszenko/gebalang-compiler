@@ -1,3 +1,6 @@
+from src.lexer import lexer
+from src.parser import parser
+
 def lex_to_token_list(lex, code):
     reset_and_start_lexer(lex, code)
     return [t for t in lex]
@@ -17,3 +20,7 @@ def reset_and_start_lexer(lex, code):
 
 def remove_whitespace(simple_program_string):
     return "".join(simple_program_string.split())
+
+
+def parse(string_to_parse):
+    return parser.parse(input=string_to_parse, lexer=lexer)

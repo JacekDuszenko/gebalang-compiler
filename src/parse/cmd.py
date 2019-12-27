@@ -2,7 +2,7 @@ from src.ast.command import *
 
 
 def create_assign_command(p):
-    cmd = AssignCommand(p[1], [3])
+    cmd = AssignCommand(p[1], p[3])
     p[0] = cmd
 
 

@@ -1,6 +1,6 @@
 import logging
 
-from src.error.GebalangLexException import GebalangLexException
+from src.error.GebalangException import GebalangException
 
 LLMAX = 2 ** 63 - 1
 LLMIN = - 2 ** 63
@@ -23,14 +23,14 @@ def handle_wrong_input(argv):
 
 
 def print_generated_code_to_file(code, filename):
-    with open(filename) as out_file:
+    with open(filename, mode='w') as out_file:
         for line in code:
             out_file.write(line + '\n')
 
 
 def error(line_number, error_message):
-    logging.error(format_error(line_number, error_message))
-    raise GebalangLexException()
+    print(format_error(line_number, error_message))
+    raise GebalangException()
 
 
 def format_error(line_number, error_message):
@@ -43,3 +43,21 @@ def is_in_range(number):
 
 def create_not_in_range_message(number):
     return 'Number {} is not in range. It must be between LLMAX(2^63 - 1) and LLMIN(-2^63)'.format(number)
+
+
+def pretty_print(clas, indent=0):
+    print(' ' * indent + type(clas).__name__ + ':')
+    indent += 4
+    for k, v in clas.__dict__.items():
+        execute_printing(indent, k, v)
+
+
+def execute_printing(indent, k, v):
+    if isinstance(v, list):
+        for elem in v:
+            pretty_print(elem, indent)
+    elif '__dict__' in dir(v):
+        pretty_print(v, indent)
+    else:
+        print(' ' * indent + k + ': ' + str(v))
+
