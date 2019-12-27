@@ -13,18 +13,20 @@ class Declarations:
 
 
 class VariableDeclaration:
-    def __init__(self, id):
+    def __init__(self, id, line):
         self.id = id
+        self.line = line
 
     @staticmethod
     def is_leaf(): return True
 
 
 class ArrayDeclaration:
-    def __init__(self, id, start, end):
+    def __init__(self, id, start, end, line):
         self.id = id
         self.start_index = start
         self.end_index = end
+        self.line = line
 
     @staticmethod
     def is_leaf(): return True

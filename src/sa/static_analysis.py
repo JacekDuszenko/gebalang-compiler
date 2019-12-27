@@ -13,8 +13,7 @@ def visit_declarations(declarations_node):
     visitor = DeclarationVisitor()
     preorder(declarations_node, visitor)
     decs = visitor.list_of_declarations
-    for d in decs:
-        pretty_print(d)
+    print(decs)
 
 
 def execute_static_analysis(parse_tree):
