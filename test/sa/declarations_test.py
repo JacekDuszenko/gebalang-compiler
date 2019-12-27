@@ -1,11 +1,10 @@
 import pytest
-
-from src.error.GebalangException import GebalangException
 from src.sa.static_analysis import execute_static_analysis
 from test.utils import *
 
 
 class TestDeclarations:
+
     def test_varvar_redeclaration(self):
         simple_program_string = """
                        DECLARE a, b, a BEGIN
@@ -65,4 +64,13 @@ class TestDeclarations:
         ptree = parse(simple_program_string)
         with pytest.raises(GebalangException):
             execute_static_analysis(ptree)
+
+    def test_arr_equal_range(self):
+        simple_program_string = """
+                             DECLARE a(0:0) BEGIN
+                             READ a(0);
+                             END
+                             """
+        ptree = parse(simple_program_string)
+        execute_static_analysis(ptree)
 

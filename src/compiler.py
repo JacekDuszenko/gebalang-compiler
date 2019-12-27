@@ -10,8 +10,8 @@ yacc = parser
 
 
 def compile_gebalang(code, debug=False):
-    program = yacc.parse(input=code, lexer=lex)
-    execute_static_analysis(program)
+    ptree = yacc.parse(input=code, lexer=lex)
+    execute_static_analysis(ptree)
 
 
 if __name__ == "__main__":

@@ -1,20 +1,7 @@
-from src.sa.visitors import *
+from src.sa.validation import validate_and_get_declarations
 from src.util import *
 
 
-def preorder(node, visitor):
-    visitor.visit(node)
-    children = [] if node.is_leaf() else node.get_children()
-    for c in children:
-        preorder(c, visitor)
-
-
-def visit_declarations(declarations_node):
-    visitor = DeclarationVisitor()
-    preorder(declarations_node, visitor)
-    decs = visitor.list_of_declarations
-    print(decs)
-
-
 def execute_static_analysis(parse_tree):
-    visit_declarations(parse_tree.declarations)
+    decs = validate_and_get_declarations(parse_tree.declarations)
+    pp(decs)

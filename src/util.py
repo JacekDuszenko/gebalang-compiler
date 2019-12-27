@@ -45,19 +45,23 @@ def create_not_in_range_message(number):
     return 'Number {} is not in range. It must be between LLMAX(2^63 - 1) and LLMIN(-2^63)'.format(number)
 
 
-def pretty_print(clas, indent=0):
+def pp(clas, indent=0):
     print(' ' * indent + type(clas).__name__ + ':')
     indent += 4
-    for k, v in clas.__dict__.items():
-        execute_printing(indent, k, v)
+    if isinstance(clas, list):
+        for i, elem in enumerate(clas):
+            execute_printing(indent, i, elem)
+    else:
+        for k, v in clas.__dict__.items():
+            execute_printing(indent, k, v)
 
 
 def execute_printing(indent, k, v):
     if isinstance(v, list):
         for elem in v:
-            pretty_print(elem, indent)
+            pp(elem, indent)
     elif '__dict__' in dir(v):
-        pretty_print(v, indent)
+        pp(v, indent)
     else:
         print(' ' * indent + k + ': ' + str(v))
 

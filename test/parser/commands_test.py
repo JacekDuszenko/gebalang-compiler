@@ -1,4 +1,4 @@
-from src.util import pretty_print
+from src.util import pp
 from test.utils import *
 
 
@@ -15,7 +15,7 @@ class TestCommands:
                        END
                        """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)
 
     def test_valid_if(self):
         simple_program_string = """
@@ -27,7 +27,7 @@ class TestCommands:
                           END
                           """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)
 
     def test_valid_while(self):
         simple_program_string = """
@@ -44,7 +44,7 @@ class TestCommands:
                              END
                              """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)
 
     def test_valid_do_while(self):
         simple_program_string = """
@@ -61,7 +61,7 @@ class TestCommands:
                                END
                                  """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)
 
     def test_valid_for_up(self):
         simple_program_string = """
@@ -74,7 +74,7 @@ class TestCommands:
                                END
                                  """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)
 
     def test_valid_for_down_to(self):
         simple_program_string = """
@@ -87,7 +87,7 @@ class TestCommands:
                                   END
                                     """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)
 
 
     def test_large_embedding_for_to(self):
@@ -112,7 +112,7 @@ class TestCommands:
                                   END
                                     """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)
 
     def test_large_embedding_for_down_to(self):
         simple_program_string = """
@@ -136,7 +136,7 @@ class TestCommands:
                                      END
                                        """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)
 
     def test_large_embedding_while(self):
         simple_program_string = """
@@ -160,7 +160,7 @@ class TestCommands:
                                              END
                                                """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)
 
     def test_large_embedding_do_while(self):
         simple_program_string = """
@@ -176,4 +176,4 @@ class TestCommands:
                                 END
                                   """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)

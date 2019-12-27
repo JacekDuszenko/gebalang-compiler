@@ -1,4 +1,4 @@
-from src.util import pretty_print
+from src.util import pp
 from test.utils import *
 
 
@@ -14,4 +14,4 @@ class TestIdentifiers:
                        END
                        """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)

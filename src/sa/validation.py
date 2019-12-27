@@ -1,12 +1,15 @@
-from src.util import *
+from src.sa.visitors import DeclarationVisitor
 
 
-def detect_redeclaration(node, list_of_declarations):
-    list_of_ids = map(lambda n: n.id, list_of_declarations)
-    if node.id in list_of_ids:
-        error(node.line, "Second declaration of variable {}".format(node.id))
+def preorder(node, visitor):
+    visitor.visit(node)
+    children = [] if node.is_leaf() else node.get_children()
+    for c in children:
+        preorder(c, visitor)
 
 
-def detect_wrong_array_range(node):
-    if node.start_index > node.end_index:
-        error(node.line, "Invalid range of array with id {}.".format(node.id))
+def validate_and_get_declarations(declarations_node):
+    visitor = DeclarationVisitor()
+    preorder(declarations_node, visitor)
+    decs = visitor.list_of_declarations
+    return decs

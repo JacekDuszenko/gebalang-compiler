@@ -1,5 +1,5 @@
 from test.utils import *
-from src.util import pretty_print
+from src.util import pp
 
 
 class TestDeclarations:
@@ -42,4 +42,4 @@ class TestDeclarations:
                        END
                        """
         ptree = parse(simple_program_string)
-        pretty_print(ptree)
+        pp(ptree)

@@ -1,3 +1,4 @@
+from src.error.GebalangException import GebalangException
 from src.lexer import lexer
 from src.parser import parser
 
@@ -25,3 +26,4 @@ def remove_whitespace(simple_program_string):
 
 def parse(string_to_parse):
     return parser.parse(input=string_to_parse, lexer=lexer)
+
