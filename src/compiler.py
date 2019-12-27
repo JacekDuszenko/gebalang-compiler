@@ -2,15 +2,16 @@ import sys
 
 from src.lexer import lexer
 from src.parser import parser
+from src.sa.static_analysis import execute_static_analysis
 from src.util import *
 
 lex = lexer
 yacc = parser
 
 
-def compile():
-    program = yacc.parse(input=gebalang_code, lexer=lex)
-    pretty_print(program)
+def compile_gebalang(code, debug=False):
+    program = yacc.parse(input=code, lexer=lex)
+    execute_static_analysis(program)
 
 
 if __name__ == "__main__":
@@ -19,6 +20,6 @@ if __name__ == "__main__":
     with open(sys.argv[1]) as in_file:
         gebalang_code = in_file.read()
         try:
-            compile()
+            compile_gebalang(gebalang_code, debug)
         except GebalangException:
             exit(1)
