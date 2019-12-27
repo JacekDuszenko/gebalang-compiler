@@ -1,4 +1,3 @@
-from src.lexer import lexer
 from test.utils import *
 
 ERST = """[ sito Eratostenesa ]

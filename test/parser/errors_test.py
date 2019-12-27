@@ -95,3 +95,90 @@ class TestParseErrors:
                        """
         with pytest.raises(GebalangException):
             parse(simple_program_string)
+
+    def test_read_number(self):
+        simple_program_string = """
+                          DECLARE a BEGIN
+                          READ 50;
+                          END
+                          """
+        with pytest.raises(GebalangException):
+            parse(simple_program_string)
+
+    def test_ID_in_for_number(self):
+        simple_program_string = """
+                                BEGIN
+                                   READ a;
+                                  FOR b1 FROM 10 DOWNTO 0 DO 
+                                  a ASSIGN a PLUS 1;
+                                  ENDFOR
+                                    WRITE a;
+                                  END
+                                """
+        with pytest.raises(GebalangException):
+            parse(simple_program_string)
+
+    def test_ID_in_for_uppercase(self):
+        simple_program_string = """
+                                   BEGIN
+                                      READ a;
+                                     FOR aA FROM 10 TO 12 DO 
+                                     a ASSIGN a PLUS 1;
+                                     ENDFOR
+                                       WRITE a;
+                                     END
+                                   """
+        with pytest.raises(GebalangException):
+            parse(simple_program_string)
+
+    def test_identifier_wrong_id(self):
+        simple_program_string = """
+                          DECLARE a,b,c(2:30) BEGIN
+                          READ b;
+                          READ a;
+                          c(5b) ASSIGN 10;
+                          c(b) ASSIGN a;
+                          END
+                          """
+        with pytest.raises(GebalangException):
+            parse(simple_program_string)
+
+    def test_identifier_wrong_id_2(self):
+        simple_program_string = """
+                             DECLARE a,b,c(2:30) BEGIN
+                             READ b;
+                             READ a;
+                             c(A) ASSIGN 10;
+                             c(b) ASSIGN a;
+                             END
+                             """
+        with pytest.raises(GebalangException):
+            parse(simple_program_string)
+
+    def test_identifier_wrong_id_3(self):
+        simple_program_string = """
+                                DECLARE a,b,c(2:30) BEGIN
+                                READ b;
+                                READ a;
+                                c(a) ASSIGN 10;
+                                c(b) ASSIGN aA;
+                                END
+                                """
+        with pytest.raises(GebalangException):
+            parse(simple_program_string)
+
+    def test_no_commands(self):
+        simple_program_string = """
+                                  DECLARE a,b,c(2:30) BEGIN
+                                  END
+                                  """
+        with pytest.raises(GebalangException):
+            parse(simple_program_string)
+
+    def test_no_commands_no_declare(self):
+        simple_program_string = """
+                                    BEGIN
+                                    END
+                                    """
+        with pytest.raises(GebalangException):
+            parse(simple_program_string)

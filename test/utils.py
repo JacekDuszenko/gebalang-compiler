@@ -1,6 +1,7 @@
 from src.lexer import lexer
 from src.parser import parser
 
+
 def lex_to_token_list(lex, code):
     reset_and_start_lexer(lex, code)
     return [t for t in lex]

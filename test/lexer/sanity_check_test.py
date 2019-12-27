@@ -1,7 +1,6 @@
 import pytest
 
 from src.error.GebalangException import GebalangException
-from src.lexer import lexer
 from test.utils import *
 
 
