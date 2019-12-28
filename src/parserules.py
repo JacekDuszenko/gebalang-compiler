@@ -5,7 +5,7 @@ from src.parse.declaration import *
 from src.parse.expr_cond import *
 from src.parse.val_ident import *
 from src.util import error
-from src.tokrules import tokens #this import has to stay because of ply introspection when it comes to token discovery
+from src.tokrules import tokens  # this import has to stay because of ply introspection when it comes to token discovery
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),

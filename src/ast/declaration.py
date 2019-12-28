@@ -1,3 +1,14 @@
+from src.ast.val_ident import IdentifierVariable, IdentifierArrayNumber, IdentifierArrayVariable
+
+
+def create_variable_typearr():
+    return [type(IdentifierVariable())]
+
+
+def create_array_typearr():
+    return [type(IdentifierArrayVariable()), type(IdentifierArrayNumber())]
+
+
 class Declarations:
     def __init__(self, ):
         self.declarations = []
@@ -20,6 +31,14 @@ class VariableDeclaration:
     @staticmethod
     def is_leaf(): return True
 
+    @staticmethod
+    def variable_types():
+        return create_variable_typearr()
+
+    @staticmethod
+    def type_info():
+        return "int variable"
+
 
 class ArrayDeclaration:
     def __init__(self, id, start, end, line):
@@ -30,3 +49,11 @@ class ArrayDeclaration:
 
     @staticmethod
     def is_leaf(): return True
+
+    @staticmethod
+    def variable_types():
+        return create_array_typearr()
+
+    @staticmethod
+    def type_info():
+        return "int array"

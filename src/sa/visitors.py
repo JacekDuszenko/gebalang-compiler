@@ -1,5 +1,7 @@
 from src.ast import *
+from src.sa.visit_strategy import create_visit_strats
 from src.util import error
+import copy
 
 
 class Visitor:
@@ -30,3 +32,24 @@ def detect_redeclaration(node, list_of_declarations):
 def detect_wrong_array_range(node):
     if node.start_index > node.end_index:
         error(node.line, "Invalid range of array with id {}.".format(node.id))
+
+
+class RecVariableVisitor(Visitor):
+    def __init__(self, scope):
+        self.scope = scope
+        self.visit_strategies = create_visit_strats()
+
+    def visit(self, node):
+        old_scope = copy.deepcopy(self.scope)
+        for strat in self.visit_strategies:
+            if strat.is_applicable(node):
+                self.scope = strat.apply(self, node)
+                break
+        self.visit_children(node)
+        self.scope = old_scope
+
+    def visit_children(self, node):
+        children = [] if node.is_leaf() else node.get_children()
+        for child in children:
+            self.visit(child)
+

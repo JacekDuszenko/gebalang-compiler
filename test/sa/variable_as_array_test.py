@@ -38,7 +38,7 @@ class TestVariableAsArray:
     def test_variable_assign_with_variable_accessor_as_array(self):
         simple_program_string = """
                                    DECLARE a, b BEGIN
-                                       READ b
+                                       READ b;
                                        a(b) ASSIGN 10;
                                    END
                                    """
@@ -50,7 +50,7 @@ class TestVariableAsArray:
         simple_program_string = """
                                 DECLARE a BEGIN
                                 READ a;
-                                IF a(4) > 10 THEN
+                                IF a(4) GE 10 THEN
                                     WRITE 100;
                                 ENDIF
                                 END
@@ -63,7 +63,7 @@ class TestVariableAsArray:
         simple_program_string = """
                                    DECLARE a BEGIN
                                    READ a;
-                                   IF a(4) > 10 THEN
+                                   IF a(4) EQ 10 THEN
                                         WRITE 100;
                                    ELSE
                                         WRITE 200;
@@ -78,7 +78,7 @@ class TestVariableAsArray:
         simple_program_string = """
                                 DECLARE a BEGIN
                                 READ a;
-                                WHILE a(-10) > 10 DO
+                                WHILE a(-10) NEQ 10 DO
                                     WRITE 100;
                                 ENDWHILE
                                 END
@@ -93,8 +93,8 @@ class TestVariableAsArray:
                                    READ a;
                                    DO
                                        WRITE 100;
-                                   WHILE a(-10) > 10 ENDDO
-                                   ENDWHILE
+                                   WHILE a(-10) LEQ 10 
+                                   ENDDO
                                    END
                                    """
         ptree = parse(simple_program_string)
@@ -157,7 +157,7 @@ class TestVariableAsArray:
         simple_program_string = """
                                            DECLARE a, b BEGIN
                                            READ a;
-                                           b ASSIGN 35 DIV a(3) MOD 10;
+                                           b ASSIGN 35 DIV a(3);
                                            END
                                            """
         ptree = parse(simple_program_string)
@@ -167,8 +167,8 @@ class TestVariableAsArray:
     def test_variable_expression_as_array_2nd(self):
         simple_program_string = """
                                     DECLARE a BEGIN
-                                    READ a, b, c;
-                                    b ASSIGN 35 MOD b TIMES c TIMES a(4);
+                                    READ a;
+                                    b ASSIGN 35 MOD  a(4);
                                     END
                                 """
         ptree = parse(simple_program_string)

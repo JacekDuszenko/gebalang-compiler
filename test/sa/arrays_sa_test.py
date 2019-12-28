@@ -100,7 +100,7 @@ class TestSaArrays:
                                          DECLARE a(2:10), b, c BEGIN
                                              READ b;
                                              READ c;
-                                             b ASSIGN b PLUS c TIMES a;
+                                             b ASSIGN b PLUS a;
                                          END
                                                       """
         ptree = parse(simple_program_string)
@@ -112,7 +112,7 @@ class TestSaArrays:
                                           DECLARE a(2:10), b, c BEGIN
                                               READ b;
                                               READ c;
-                                              b ASSIGN b PLUS a TIMES c TIMES b TIMES b;
+                                              a ASSIGN b PLUS a;
                                           END
                                                        """
         ptree = parse(simple_program_string)

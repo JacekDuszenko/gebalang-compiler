@@ -1,6 +1,7 @@
 class Value:
-    def __init__(self, value):
+    def __init__(self, value, line):
         self.value = value
+        self.line = line
 
     def is_leaf(self): return isinstance(self.value, int) or isinstance(self.value, str)
 
@@ -11,26 +12,29 @@ class Value:
 
 
 class IdentifierVariable:
-    def __init__(self, variable):
+    def __init__(self, variable='', line=0):
         self.variable = variable
+        self.line = line
 
     @staticmethod
     def is_leaf(): return True
 
 
 class IdentifierArrayVariable:
-    def __init__(self, array, variable):
-        self.array = array
+    def __init__(self, variable='', accessor='', line=0):
         self.variable = variable
+        self.accessor = accessor
+        self.line = line
 
     @staticmethod
     def is_leaf(): return True
 
 
 class IdentifierArrayNumber:
-    def __init__(self, array, number):
-        self.array = array
-        self.number = number
+    def __init__(self, variable='', accessor='', line=0):
+        self.variable = variable
+        self.accessor = accessor
+        self.line = line
 
     @staticmethod
     def is_leaf(): return True
