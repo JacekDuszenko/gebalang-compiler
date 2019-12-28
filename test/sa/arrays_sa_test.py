@@ -4,96 +4,7 @@ from src.sa.static_analysis import execute_static_analysis
 from test.utils import *
 
 
-class TestCompoundSa:
-    def test_undeclared_variable(self):
-        simple_program_string = """
-                             DECLARE a BEGIN
-                             READ a;
-                             b ASSIGN a;
-                             END
-                             """
-        ptree = parse(simple_program_string)
-        with pytest.raises(GebalangException):
-            execute_static_analysis(ptree)
-
-
-
-    def test_assignment_of_not_initialized_variable(self):
-        simple_program_string = """
-                                DECLARE a, b BEGIN
-                                b ASSIGN a;
-                                END
-                                """
-        ptree = parse(simple_program_string)
-        with pytest.raises(GebalangException):
-            execute_static_analysis(ptree)
-
-    def test_local_iterator_the_same_name_as_global(self):
-        simple_program_string = """
-                                DECLARE a BEGIN
-                                FOR a FROM 0 TO 100 DO
-                                    WRITE 10;
-                                ENDFOR
-                                END
-                                """
-        ptree = parse(simple_program_string)
-        with pytest.raises(GebalangException):
-            execute_static_analysis(ptree)
-
-    def test_MUST_ASSIGN_assignment_of_local_scope_variable_nested(self):
-        simple_program_string = """
-                                DECLARE a BEGIN
-                                FOR b FROM 0 TO 100 DO
-                                    FOR a FROM 0 TO 100 DO
-                                        WRITE 10;
-                                    ENDFOR
-                                ENDFOR
-                                END
-                                """
-        ptree = parse(simple_program_string)
-        with pytest.raises(GebalangException):
-            execute_static_analysis(ptree)
-
-    def test_usage_of_local_variable_out_of_scope(self):
-        simple_program_string = """
-                                BEGIN
-                                FOR a FROM 0 TO 100 DO
-                                    FOR b FROM 0 TO 100 DO
-                                        WRITE 10;
-                                    ENDFOR
-                                    WRITE b; [this should fail]
-                                ENDFOR
-                                END
-                                """
-        ptree = parse(simple_program_string)
-        with pytest.raises(GebalangException):
-            execute_static_analysis(ptree)
-
-    def test_usage_of_local_variable_out_of_scope_because_in_global(self):
-        simple_program_string = """
-                                   BEGIN
-                                   FOR a FROM 0 TO 100 DO
-                                       FOR b FROM 0 TO 100 DO
-                                           WRITE 10;
-                                       ENDFOR
-                                   ENDFOR
-                                   b ASSIGN 10; [this should fail]
-                                   END
-                                   """
-        ptree = parse(simple_program_string)
-        with pytest.raises(GebalangException):
-            execute_static_analysis(ptree)
-
-    def test_write_of_not_initialized_variable(self):
-        simple_program_string = """
-                                   DECLARE a BEGIN
-                                   WRITE a;
-                                   END
-                                   """
-        ptree = parse(simple_program_string)
-        with pytest.raises(GebalangException):
-            execute_static_analysis(ptree)
-
+class TestSaArrays:
     def test_assignment_of_array_without_braces(self):
         simple_program_string = """
                                      DECLARE a(2:10) BEGIN
@@ -106,7 +17,7 @@ class TestCompoundSa:
 
     def test_usage_of_array_without_braces_in_for_to_loop_in_FROM_clause(self):
         simple_program_string = """
-                                        DECLARE a(0:10) BEGIN
+                                        DECLARE a(2:10) BEGIN
                                         a(0) ASSIGN 5;
                                         FOR i FROM a TO 10 DO 
                                             WRITE 5;
@@ -119,7 +30,7 @@ class TestCompoundSa:
 
     def test_usage_of_array_without_braces_in_for_to_loop_in_TO_clause(self):
         simple_program_string = """
-                                           DECLARE a(0:10) BEGIN
+                                           DECLARE a(2:10) BEGIN
                                            a(0) ASSIGN 5;
                                            FOR i FROM 10 TO a DO 
                                                WRITE 5;
@@ -132,7 +43,7 @@ class TestCompoundSa:
 
     def test_usage_of_array_without_braces_in_for_downto_loop_in_FROM_clause(self):
         simple_program_string = """
-                                              DECLARE a(0:10) BEGIN
+                                              DECLARE a(2:10) BEGIN
                                               a(0) ASSIGN 5;
                                               FOR i FROM a DOWNTO 10 DO 
                                                   WRITE 5;
@@ -145,13 +56,65 @@ class TestCompoundSa:
 
     def test_usage_of_array_without_braces_in_for_downto_loop_in_DOWNTO_clause(self):
         simple_program_string = """
-                                                 DECLARE a(0:10) BEGIN
+                                                 DECLARE a(2:10) BEGIN
                                                  a(0) ASSIGN 5;
                                                  FOR i FROM 0 DOWNTO a DO 
                                                      WRITE 5;
                                                  ENDFOR
                                                  END
                                                  """
+        ptree = parse(simple_program_string)
+        with pytest.raises(GebalangException):
+            execute_static_analysis(ptree)
+
+    def test_usage_of_array_without_braces_in_if_condition(self):
+        simple_program_string = """
+                                    DECLARE a(2:10) BEGIN
+                                        READ a(0);
+                                        IF a EQ 50 THEN
+                                        WRITE 20;
+                                        ENDIF
+                                    END
+                                                 """
+        ptree = parse(simple_program_string)
+        with pytest.raises(GebalangException):
+            execute_static_analysis(ptree)
+
+    def test_usage_of_array_without_braces_in_if_else_condition(self):
+        simple_program_string = """
+                                      DECLARE a(2:10) BEGIN
+                                          READ a(0);
+                                          IF a NEQ 50 THEN
+                                          WRITE 20;
+                                          ELSE
+                                          WRITE 30;
+                                          ENDIF
+                                      END
+                                                   """
+        ptree = parse(simple_program_string)
+        with pytest.raises(GebalangException):
+            execute_static_analysis(ptree)
+
+    def test_usage_of_array_without_braces_in_expression(self):
+        simple_program_string = """
+                                         DECLARE a(2:10), b, c BEGIN
+                                             READ b;
+                                             READ c;
+                                             b ASSIGN b PLUS c TIMES a;
+                                         END
+                                                      """
+        ptree = parse(simple_program_string)
+        with pytest.raises(GebalangException):
+            execute_static_analysis(ptree)
+
+    def test_usage_of_array_without_braces_in_expression_other_combination(self):
+        simple_program_string = """
+                                          DECLARE a(2:10), b, c BEGIN
+                                              READ b;
+                                              READ c;
+                                              b ASSIGN b PLUS a TIMES c TIMES b TIMES b;
+                                          END
+                                                       """
         ptree = parse(simple_program_string)
         with pytest.raises(GebalangException):
             execute_static_analysis(ptree)
