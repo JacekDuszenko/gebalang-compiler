@@ -12,9 +12,10 @@ class Value:
 
 
 class IdentifierVariable:
-    def __init__(self, variable='', line=0):
+    def __init__(self, variable='', line=0, local=False):
         self.variable = variable
         self.line = line
+        self.local = local
 
     @staticmethod
     def is_leaf(): return True
