@@ -8,5 +8,5 @@ class DoWhileCgStrat:
         return isinstance(node, DoWhileCommand)
 
     @staticmethod
-    def apply(visitor, node, codeg):
+    def apply(visitor, node, codegen):
         return ""

@@ -1,7 +1,7 @@
 DECLARE
-    a, b, c(10:20)
+    a, b, c(10:200),d,e,f,g,h,j,k,l
 BEGIN
-    READ a;
+    READ d;
     FOR i FROM 0 TO 100 DO
         WRITE 20;
     ENDFOR

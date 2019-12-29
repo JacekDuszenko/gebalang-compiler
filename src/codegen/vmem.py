@@ -1,11 +1,10 @@
-def max_vm_mem_address():
-    return 2 ** 62
+STARTING_MEMORY = 1
 
 
 class VirtualMemory:
     def __init__(self):
-        self.memory = {i: EmptyMemoryCell(i) for i in range(0, max_vm_mem_address() + 1)}
-        self.memory_counter = 0
+        self.memory = {}
+        self.memory_counter = STARTING_MEMORY
 
     def allocate_memory_for_variable(self, variable_name, variable_declaration):
         var_cell = VariableMemoryCell(variable_declaration, variable_name, self.memory_counter)
@@ -36,11 +35,6 @@ class VirtualMemory:
 
 class MemoryCell:
     pass
-
-
-class EmptyMemoryCell(MemoryCell):
-    def __init__(self, addr):
-        self.addr = addr
 
 
 class VariableMemoryCell(MemoryCell):

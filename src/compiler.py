@@ -12,10 +12,9 @@ yacc = parser
 
 def compile_gebalang(code, debug=False):
     ptree = yacc.parse(input=code, lexer=lex)
-    execute_static_analysis(ptree)
-    codegen = create_code_generator(ptree)
-    code = codegen.generate_vm_code()
-    print(code)
+    globals = execute_static_analysis(ptree)
+    codegen = create_code_generator(ptree, globals)
+    print(codegen.generate_vm_code())
 
 
 if __name__ == "__main__":

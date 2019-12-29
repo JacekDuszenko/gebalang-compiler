@@ -8,5 +8,5 @@ class IfThenElseCgStrat:
         return isinstance(node, IfThenElseCommand)
 
     @staticmethod
-    def apply(visitor, node, codeg):
+    def apply(visitor, node, codegen):
         return ""

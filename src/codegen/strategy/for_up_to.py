@@ -8,5 +8,5 @@ class ForUpToCgStrat:
         return isinstance(node, ForUpToCommand)
 
     @staticmethod
-    def apply(visitor, node, codeg):
+    def apply(visitor, node, codegen):
         return ""

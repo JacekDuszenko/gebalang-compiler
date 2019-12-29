@@ -7,4 +7,4 @@ def execute_static_analysis(parse_tree):
     decs = validate_and_get_declarations(parse_tree.declarations)
     scope = create_global_scope_from_decs(decs)
     validate_variables(scope, parse_tree.commands)
-
+    return scope

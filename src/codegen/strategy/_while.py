@@ -8,5 +8,5 @@ class WhileCgStrat:
         return isinstance(node, WhileCommand)
 
     @staticmethod
-    def apply(visitor, node, codeg):
+    def apply(visitor, node, codegen):
         return ""
