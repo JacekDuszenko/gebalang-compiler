@@ -28,13 +28,13 @@ def create_do_while_command(p):
 
 
 def create_for_up_to_command(p):
-    local_variable = IdentifierVariable(p[2], p.lineno(2), local=True)
+    local_variable = IdentifierVariable(p[2], p.lineno(2))
     cmd = ForUpToCommand(local_variable, p[4], p[6], p[8])
     p[0] = cmd
 
 
 def create_for_down_to_command(p):
-    local_variable = IdentifierVariable(p[2], p.lineno(2), local=True)
+    local_variable = IdentifierVariable(p[2], p.lineno(2))
     cmd = ForDownToCommand(local_variable, p[4], p[6], p[8])
     p[0] = cmd
 

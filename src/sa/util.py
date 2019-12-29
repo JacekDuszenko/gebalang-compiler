@@ -109,19 +109,31 @@ def add_local_variable_to_scope(visitor, local_iterator):
     visitor.scope[variable_name] = local_declaration
 
 
-def handle_local_iterator_logic(for_up_to_cmd, visitor):
+def handle_local_iterator_logic(for_loop, visitor):
     scope = visitor.scope
-    local_iterator = for_up_to_cmd.local_iterator
+    local_iterator = for_loop.local_iterator
     validate_iterator_not_in_scope(local_iterator, scope)
+    validate_iterator_not_in_loop_range(for_loop, local_iterator)
+
     add_local_variable_to_scope(visitor, local_iterator)
 
 
+def validate_iterator_not_in_loop_range(for_loop, local_iterator):
+    identifiers = extract_identifiers_from_forloop(for_loop.value_from, for_loop.value_to)
+    [error(local_iterator.line, using_local_in_loop_range(i.variable)) for i in identifiers if
+     i.variable is local_iterator.variable]
+
+
+def using_local_in_loop_range(identifier):
+    return f'Loop iterator {identifier} used in loop range'
+
+
 def ndeclared_msg(identifier):
-    return "Variable {} has not been declared".format(identifier)
+    return f'Variable {identifier} has not been declared'
 
 
 def wrong_usage(v, vtype):
-    return "Wrong usage of variable {}. This variable is declared as {}.".format(v, vtype)
+    return f'Wrong usage of variable {v}. This variable is declared as {vtype}.'
 
 
 def accessor_not_in_range(accessor, l, r, array_id):

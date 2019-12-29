@@ -1,5 +1,6 @@
 import sys
 
+from src.codegen.codegen_factory import create_code_generator
 from src.lexer import lexer
 from src.parser import parser
 from src.sa.static_analysis import execute_static_analysis
@@ -12,6 +13,9 @@ yacc = parser
 def compile_gebalang(code, debug=False):
     ptree = yacc.parse(input=code, lexer=lex)
     execute_static_analysis(ptree)
+    codegen = create_code_generator(ptree)
+    code = codegen.generate_vm_code()
+    print(code)
 
 
 if __name__ == "__main__":

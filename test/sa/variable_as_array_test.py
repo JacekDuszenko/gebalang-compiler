@@ -166,7 +166,7 @@ class TestVariableAsArray:
 
     def test_variable_expression_as_array_2nd(self):
         simple_program_string = """
-                                    DECLARE a BEGIN
+                                    DECLARE a,b BEGIN
                                     READ a;
                                     b ASSIGN 35 MOD  a(4);
                                     END

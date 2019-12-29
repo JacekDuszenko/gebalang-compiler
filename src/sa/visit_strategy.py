@@ -18,6 +18,7 @@ class AssignVisitStrategy:
         [validate_identifier(scope, i) for i in expr_identifiers]
         mark_as_initialized(scope, variable_node)
         [validate_initialized(scope, i) for i in expr_identifiers]
+        return visitor.scope
 
 
 class IfThenVisitStrategy:

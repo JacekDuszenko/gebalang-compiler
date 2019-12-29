@@ -3,10 +3,6 @@ DECLARE
 BEGIN
     READ a;
     FOR i FROM 0 TO 100 DO
-        FOR j FROM 0 TO 100 DO
-            FOR k FROM 0 TO 100 DO
-                WRITE 1;
-            ENDFOR
-        ENDFOR
+        WRITE 20;
     ENDFOR
 END

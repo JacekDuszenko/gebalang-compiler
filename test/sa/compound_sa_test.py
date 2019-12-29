@@ -222,6 +222,30 @@ class TestCompoundSa:
         with pytest.raises(GebalangException):
             execute_static_analysis(ptree)
 
+    def test_loop_iterator_in_array_range(self):
+        simple_program_string = """
+                                  DECLARE a(0:10), b BEGIN
+                                      FOR i FROM 0 TO i DO
+                                      WRITE 10;
+                                      ENDFOR
+                                      END
+                                  """
+        ptree = parse(simple_program_string)
+        with pytest.raises(GebalangException):
+            execute_static_analysis(ptree)
+
+    def test_loop_iterator_in_array_range_downto(self):
+        simple_program_string = """
+                                  DECLARE a(0:10), b BEGIN
+                                      FOR i FROM i DOWNTO 0 DO
+                                      WRITE 10;
+                                      ENDFOR
+                                      END
+                                  """
+        ptree = parse(simple_program_string)
+        with pytest.raises(GebalangException):
+            execute_static_analysis(ptree)
+
     def test_analysis_should_pass_when_literals_in_assignment_conditon_expression(self):
         simple_program_string = """
                                   DECLARE a BEGIN
