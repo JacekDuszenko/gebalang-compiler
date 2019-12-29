@@ -16,8 +16,6 @@ class TestCompoundSa:
         with pytest.raises(GebalangException):
             execute_static_analysis(ptree)
 
-
-
     def test_assignment_of_not_initialized_variable(self):
         simple_program_string = """
                                 DECLARE a, b BEGIN
@@ -223,3 +221,21 @@ class TestCompoundSa:
         ptree = parse(simple_program_string)
         with pytest.raises(GebalangException):
             execute_static_analysis(ptree)
+
+    def test_analysis_should_pass_when_literals_in_assignment_conditon_expression(self):
+        simple_program_string = """
+                                  DECLARE a BEGIN
+                                      a ASSIGN 10;
+                                      FOR i FROM 0 TO 10 DO
+                                      a ASSIGN 5;
+                                      ENDFOR
+                                      IF 2 GEQ 3 THEN
+                                      a ASSIGN 5;
+                                      ELSE
+                                      a ASSIGN 10;
+                                      ENDIF
+                                      a ASSIGN 5 MOD 10;
+                                      END
+                                  """
+        ptree = parse(simple_program_string)
+        execute_static_analysis(ptree)

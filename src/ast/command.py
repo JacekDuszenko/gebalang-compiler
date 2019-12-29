@@ -88,17 +88,17 @@ class ForUpToCommand:
 
 
 class ForDownToCommand:
-    def __init__(self, id, value_from, value_down_to, commands):
+    def __init__(self, id, value_from, value_to, commands):
         self.id = id
         self.value_from = value_from
-        self.value_down_to = value_down_to
+        self.value_to = value_to
         self.commands = commands
 
     @staticmethod
     def is_leaf(): return False
 
     def get_children(self):
-        return [self.value_from] + [self.value_down_to] + self.commands.commands
+        return [self.value_from] + [self.value_to] + self.commands.commands
 
 
 class ReadCommand:

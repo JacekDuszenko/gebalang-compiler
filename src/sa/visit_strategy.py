@@ -39,6 +39,8 @@ def extract_identifiers_from_expression(expression):
         return [expression.expression.value]
     elif isinstance(expression, BinaryExpression):
         return [expr.value for expr in [expression.left, expression.right] if not expr.is_leaf()]
+    else:
+        return []
 
 
 def extract_identifiers_from_condition(condition):
@@ -101,20 +103,33 @@ class DoWhileVisitStrategy:
         return visitor.scope
 
 
+def extract_identifiers_from_forloop(value_from, value_to):
+    return [v.value for v in [value_from, value_to] if not v.is_leaf()]
+
+
+def validate_for_loop_identifiers(for_up_to_cmd, visitor):
+    scope = visitor.scope
+    cmd_identifiers = extract_identifiers_from_forloop(for_up_to_cmd.value_from, for_up_to_cmd.value_to)
+    [validate_identifier(scope, i) for i in cmd_identifiers]
+
+
 class ForUpToVisitStrategy:
     def is_applicable(self, node):
         return isinstance(node, ForUpToCommand)
 
-    def apply(self, visitor, node):
-        return visitor.scope            #TODO
+    def apply(self, visitor, for_up_to_cmd):
+        local_iterator = for_up_to_cmd.id  # TODO
+        validate_for_loop_identifiers(for_up_to_cmd, visitor)
+        return visitor.scope
 
 
 class ForDownToVisitStrategy:
     def is_applicable(self, node):
         return isinstance(node, ForDownToCommand)
 
-    def apply(self, visitor, node):
-        return visitor.scope            #TODO
+    def apply(self, visitor, for_downto_cmd):
+        validate_for_loop_identifiers(for_downto_cmd, visitor)
+        return visitor.scope  # TODO
 
 
 class ReadVisitStrategy:
