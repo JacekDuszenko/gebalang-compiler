@@ -24,9 +24,11 @@ class Declarations:
 
 
 class VariableDeclaration:
-    def __init__(self, id, line):
+    def __init__(self, id, line, initialized=False, local=False):
         self.id = id
         self.line = line
+        self.initialized = initialized
+        self.local = local
 
     @staticmethod
     def is_leaf(): return True
@@ -41,11 +43,13 @@ class VariableDeclaration:
 
 
 class ArrayDeclaration:
-    def __init__(self, id, start, end, line):
+    def __init__(self, id, start, end, line, local=False):
         self.id = id
         self.start_index = start
         self.end_index = end
         self.line = line
+        self.local = local
+        self.initialized = [False for _ in range(start, end + 1)]
 
     @staticmethod
     def is_leaf(): return True

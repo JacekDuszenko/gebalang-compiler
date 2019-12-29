@@ -1,50 +1,8 @@
 from src.ast import *
-from src.util import error
-
+from src.sa.util import *
 """
 Each strategy's apply function returns new scope as a function of current state
 """
-
-
-def validate_variable_not_declared(scope, variable_node):
-    variable_name = variable_node.variable
-    if variable_name not in scope:
-        error(variable_node.line, ndeclared_msg(variable_name))
-
-
-def validate_variable_wrong_usage(scope, variable_node):
-    declared_variable = scope[variable_node.variable]
-    if type(variable_node) not in declared_variable.variable_types():
-        error(variable_node.line, wrong_usage(variable_node.variable, declared_variable.type_info()))
-
-
-def validate_array_accessor_in_range(scope, variable_node):
-    if isinstance(variable_node, IdentifierArrayNumber):
-        accessor_index = variable_node.accessor
-        declared_variable = scope[variable_node.variable]
-        if not declared_variable.start_index <= accessor_index <= declared_variable.end_index:
-            error(variable_node.line,
-                  accessor_not_in_range(accessor_index, declared_variable.start_index, declared_variable.end_index,
-                                        declared_variable.id))
-
-
-def validate_identifier(scope, variable_node):
-    validate_variable_not_declared(scope, variable_node)
-    validate_variable_wrong_usage(scope, variable_node)
-    validate_array_accessor_in_range(scope, variable_node)
-
-
-def extract_identifiers_from_expression(expression):
-    if isinstance(expression, UnaryExpression) and not expression.expression.is_leaf():
-        return [expression.expression.value]
-    elif isinstance(expression, BinaryExpression):
-        return [expr.value for expr in [expression.left, expression.right] if not expr.is_leaf()]
-    else:
-        return []
-
-
-def extract_identifiers_from_condition(condition):
-    return [c.value for c in [condition.left, condition.right] if not c.is_leaf()]
 
 
 class AssignVisitStrategy:
@@ -55,8 +13,11 @@ class AssignVisitStrategy:
         scope = visitor.scope
         variable_node = assign_cmd.identifier
         validate_identifier(scope, variable_node)
+        validate_loop_iterator_modification(scope, variable_node)
         expr_identifiers = extract_identifiers_from_expression(assign_cmd.expression)
         [validate_identifier(scope, i) for i in expr_identifiers]
+        mark_as_initialized(scope, variable_node)
+        [validate_initialized(scope, i) for i in expr_identifiers]
 
 
 class IfThenVisitStrategy:
@@ -67,6 +28,7 @@ class IfThenVisitStrategy:
         scope = visitor.scope
         cond_identifiers = extract_identifiers_from_condition(if_cmd.condition)
         [validate_identifier(scope, i) for i in cond_identifiers]
+        [validate_initialized(scope, i) for i in cond_identifiers]
         return visitor.scope
 
 
@@ -78,6 +40,7 @@ class IfThenElseVisitStrategy:
         scope = visitor.scope
         cond_identifiers = extract_identifiers_from_condition(if_else_cmd.condition)
         [validate_identifier(scope, i) for i in cond_identifiers]
+        [validate_initialized(scope, i) for i in cond_identifiers]
         return visitor.scope
 
 
@@ -89,6 +52,7 @@ class WhileVisitStrategy:
         scope = visitor.scope
         cond_identifiers = extract_identifiers_from_condition(while_cmd.condition)
         [validate_identifier(scope, i) for i in cond_identifiers]
+        [validate_initialized(scope, i) for i in cond_identifiers]
         return visitor.scope
 
 
@@ -100,17 +64,8 @@ class DoWhileVisitStrategy:
         scope = visitor.scope
         cond_identifiers = extract_identifiers_from_condition(do_while_cmd.condition)
         [validate_identifier(scope, i) for i in cond_identifiers]
+        [validate_initialized(scope, i) for i in cond_identifiers]
         return visitor.scope
-
-
-def extract_identifiers_from_forloop(value_from, value_to):
-    return [v.value for v in [value_from, value_to] if not v.is_leaf()]
-
-
-def validate_for_loop_identifiers(for_up_to_cmd, visitor):
-    scope = visitor.scope
-    cmd_identifiers = extract_identifiers_from_forloop(for_up_to_cmd.value_from, for_up_to_cmd.value_to)
-    [validate_identifier(scope, i) for i in cmd_identifiers]
 
 
 class ForUpToVisitStrategy:
@@ -118,7 +73,7 @@ class ForUpToVisitStrategy:
         return isinstance(node, ForUpToCommand)
 
     def apply(self, visitor, for_up_to_cmd):
-        local_iterator = for_up_to_cmd.id  # TODO
+        handle_local_iterator_logic(for_up_to_cmd, visitor)
         validate_for_loop_identifiers(for_up_to_cmd, visitor)
         return visitor.scope
 
@@ -128,8 +83,9 @@ class ForDownToVisitStrategy:
         return isinstance(node, ForDownToCommand)
 
     def apply(self, visitor, for_downto_cmd):
+        handle_local_iterator_logic(for_downto_cmd, visitor)
         validate_for_loop_identifiers(for_downto_cmd, visitor)
-        return visitor.scope  # TODO
+        return visitor.scope
 
 
 class ReadVisitStrategy:
@@ -138,7 +94,10 @@ class ReadVisitStrategy:
 
     def apply(self, visitor, read_cmd):
         scope = visitor.scope
-        validate_identifier(scope, read_cmd.identifier)
+        identifier = read_cmd.identifier
+        validate_identifier(scope, identifier)
+        validate_loop_iterator_modification(scope, identifier)
+        mark_as_initialized(scope, identifier)
         return visitor.scope
 
 
@@ -149,7 +108,9 @@ class WriteVisitStrategy:
     def apply(self, visitor, write_cmd):
         scope = visitor.scope
         if not write_cmd.value.is_leaf():
-            validate_identifier(scope, write_cmd.value.value)
+            identifier = write_cmd.value.value
+            validate_identifier(scope, identifier)
+            validate_initialized(scope, identifier)
         return visitor.scope
 
 
@@ -165,15 +126,3 @@ def create_visit_strats():
             WriteVisitStrategy()]
 
 
-def ndeclared_msg(identifier):
-    return "Variable {} has not been declared".format(identifier)
-
-
-def wrong_usage(v, vtype):
-    return "Wrong usage of variable {}. This variable is declared as {}.".format(v, vtype)
-
-
-def accessor_not_in_range(accesor, l, r, array_id):
-    return "Wrong usage of array {}. It was accessed with number {} but its range is from {} to {}".format(array_id,
-                                                                                                           accesor, l,
-                                                                                                           r)

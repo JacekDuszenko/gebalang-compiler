@@ -74,8 +74,8 @@ class DoWhileCommand:
 
 
 class ForUpToCommand:
-    def __init__(self, id, value_from, value_to, commands):
-        self.id = id
+    def __init__(self, local_iterator, value_from, value_to, commands):
+        self.local_iterator = local_iterator
         self.value_from = value_from
         self.value_to = value_to
         self.commands = commands
@@ -88,8 +88,8 @@ class ForUpToCommand:
 
 
 class ForDownToCommand:
-    def __init__(self, id, value_from, value_to, commands):
-        self.id = id
+    def __init__(self, local_iterator, value_from, value_to, commands):
+        self.local_iterator = local_iterator
         self.value_from = value_from
         self.value_to = value_to
         self.commands = commands

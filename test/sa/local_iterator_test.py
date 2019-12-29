@@ -60,3 +60,29 @@ class TestLocalIterator:
         ptree = parse(simple_program_string)
         with pytest.raises(GebalangException):
             execute_static_analysis(ptree)
+
+    def test_local_iterator_changes_value(self):
+        simple_program_string = """
+                                         DECLARE a BEGIN
+                                            READ a;
+                                             FOR i FROM 0 TO 100 DO
+                                             i ASSIGN a;
+                                                 ENDFOR
+                                         END
+                                         """
+        ptree = parse(simple_program_string)
+        with pytest.raises(GebalangException):
+            execute_static_analysis(ptree)
+
+    def test_local_iterator_changes_value_read(self):
+        simple_program_string = """
+                                            DECLARE a BEGIN
+                                               READ a;
+                                                FOR i FROM 0 TO 100 DO
+                                                    READ i;
+                                                    ENDFOR
+                                            END
+                                            """
+        ptree = parse(simple_program_string)
+        with pytest.raises(GebalangException):
+            execute_static_analysis(ptree)

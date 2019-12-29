@@ -2,7 +2,11 @@ DECLARE
     a, b, c(10:20)
 BEGIN
     READ a;
-    FOR g FROM 0 TO 100 DO
-    WRITE 1;
+    FOR i FROM 0 TO 100 DO
+        FOR j FROM 0 TO 100 DO
+            FOR k FROM 0 TO 100 DO
+                WRITE 1;
+            ENDFOR
+        ENDFOR
     ENDFOR
 END
