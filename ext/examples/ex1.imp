@@ -1,8 +1,9 @@
 DECLARE
     a, b, c(10:200),d,e,f,g,h,j,k,l
 BEGIN
-    READ d;
+    [READ d;
     FOR i FROM 0 TO 100 DO
         WRITE 20;
-    ENDFOR
+    ENDFOR]
+    WRITE 20;
 END

@@ -57,7 +57,7 @@ def pp(clas, indent=0):
 
 
 def execute_printing(indent, k, v):
-    if isinstance(v, list) and not isinstance(v[0], bool):
+    if isinstance(v, list) and len(v) > 0 and not isinstance(v[0], bool):
         for elem in v:
             pp(elem, indent)
     elif '__dict__' in dir(v):

@@ -3,7 +3,7 @@ from src.codegen.visitor import CodeGenVisitor
 
 def append_halt(func):
     def wrapper(arg):
-        return func(arg) + ' HALT'
+        return func(arg) + 'HALT'
     return wrapper
 
 
