@@ -10,7 +10,7 @@ def find_variable_addr(variable_node, codegen):
         shifted_index = abs(dec.start_index - variable_node.accessor)
         return dec.addr[shifted_index]
     else:
-        return ""
+        return "TODO IMPLEMENT THIS" #TODO
 
 
 class ReadCgStrat:
@@ -21,7 +21,5 @@ class ReadCgStrat:
 
     @staticmethod
     def apply(visitor, node, codegen):
-        return f"""
-                GET
-                STORE {find_variable_addr(node.identifier, codegen)}
-               """
+        return f"""GET
+STORE {find_variable_addr(node.identifier, codegen)}\n"""

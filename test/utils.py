@@ -9,7 +9,7 @@ from src.lexer import lexer
 from src.parser import parser
 from src.sa.static_analysis import execute_static_analysis
 
-ptaszek = ">"
+ptaszek_with_space = '> '
 
 
 def lex_to_token_list(lex, code):
@@ -51,14 +51,15 @@ def write_vm_code_to_file(vm_code):
     return filename
 
 
-def run_vm(simple_program_string, input=None):
+def run_vm(simple_program_string, input=None, delete_assembly=True):
     ptree = parse(simple_program_string)
     globals = execute_static_analysis(ptree)
     codegen = create_code_generator(ptree, globals)
     vm_code = codegen.generate_vm_code()
     filename = write_vm_code_to_file(vm_code)
     ps = subprocess.run(['../maszyna-wirtualna', filename], capture_output=True, input=input)
-    os.remove(filename)
+    if delete_assembly:
+        os.remove(filename)
     lines = [l.decode('utf-8') for l in ps.stdout.split(b'\n')]
     output_lines = []
     for l in lines:
@@ -68,7 +69,7 @@ def run_vm(simple_program_string, input=None):
 
 
 def extract_output(line, result_list):
-    after_pt = line.split('> ', 1)
+    after_pt = line.split(ptaszek_with_space, 1)
     if len(after_pt) >= 2:
         sub = after_pt[1].split('\n', 1)
         if len(sub) >= 1:

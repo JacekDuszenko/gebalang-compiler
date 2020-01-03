@@ -1,7 +1,7 @@
 from test.utils import *
 
 
-class TestWriteConstant:
+class TestWriteRead:
     def test_should_be_ok_couple_variables(self):
         simple_program_string = """
                                  DECLARE a,b,c,d(0:5) BEGIN

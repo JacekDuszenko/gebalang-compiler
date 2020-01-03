@@ -7,7 +7,7 @@ def create_constant_number(num):
     while num > 0:
         if num % 2 == 0:
             num //= 2
-            result = add_zero() + result
+            result = add_to_itself() + result
         else:
             num -= 1
             result = dec() + result if is_negative else inc() + result
@@ -19,7 +19,7 @@ def clear_register():
     return "SUB 0\n"
 
 
-def add_zero():
+def add_to_itself():
     return "ADD 0\n"
 
 
