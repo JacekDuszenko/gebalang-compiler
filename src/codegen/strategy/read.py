@@ -5,9 +5,10 @@ def find_variable_addr(variable_node, codegen):
     variable_name = variable_node.variable
     dec = codegen.vpool.pool[variable_name]
     if isinstance(variable_node, IdentifierVariable):
-        return dec.addr
+        return str(dec.addr)
     if isinstance(variable_node, IdentifierArrayNumber):
-        return dec.addr[variable_node.accessor]
+        shifted_index = abs(dec.start_index - variable_node.accessor)
+        return dec.addr[shifted_index]
     else:
         return ""
 

@@ -51,20 +51,26 @@ def write_vm_code_to_file(vm_code):
     return filename
 
 
-def run_vm(simple_program_string):
+def run_vm(simple_program_string, input=None):
     ptree = parse(simple_program_string)
     globals = execute_static_analysis(ptree)
     codegen = create_code_generator(ptree, globals)
     vm_code = codegen.generate_vm_code()
     filename = write_vm_code_to_file(vm_code)
-    ps = subprocess.run(['../maszyna-wirtualna', filename], capture_output=True)
+    ps = subprocess.run(['../maszyna-wirtualna', filename], capture_output=True, input=input)
     os.remove(filename)
     lines = [l.decode('utf-8') for l in ps.stdout.split(b'\n')]
-    lines = list(filter(lambda line: starts_with_ptaszek(line), lines))
-    lines = list(map(lambda line: line[2:], lines))
+    output_lines = []
+    for l in lines:
+        extract_output(l, output_lines)
 
-    return lines, ps.stderr, vm_code
+    return output_lines, ps.stderr, vm_code
 
 
-def starts_with_ptaszek(line):
-    return line.startswith(ptaszek)
+def extract_output(line, result_list):
+    after_pt = line.split('> ', 1)
+    if len(after_pt) >= 2:
+        sub = after_pt[1].split('\n', 1)
+        if len(sub) >= 1:
+            result_list.append(sub[0])
+

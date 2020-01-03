@@ -1,0 +1,26 @@
+
+                GET
+                STORE 1
+                LOAD 1
+                PUT
+
+                GET
+                STORE 2
+
+                GET
+                STORE 3
+                LOAD 2
+                PUT
+ LOAD 3
+                PUT
+
+                GET
+                STORE <src.codegen.vmem.ArrayMemoryCell object at 0x12addc450>
+                LOAD <src.codegen.vmem.ArrayMemoryCell object at 0x12addc450>
+                PUT
+
+                GET
+                STORE <src.codegen.vmem.ArrayMemoryCell object at 0x12addca10>
+                LOAD <src.codegen.vmem.ArrayMemoryCell object at 0x12addc450>
+                PUT
+                HALT

@@ -27,7 +27,7 @@ class VirtualMemory:
         for i in range(start_index, end_index + 1):
             var = ArrayMemoryCell(declaration, variable_name, self.memory_counter)
             self.memory[self.memory_counter] = var
-            result.append(var)
+            result.append(self.memory_counter)
             self.memory_counter += 1
         declaration.addr = result
         return result

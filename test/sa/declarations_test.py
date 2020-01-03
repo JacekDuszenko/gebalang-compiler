@@ -1,5 +1,5 @@
 import pytest
-from src.sa.static_analysis import execute_static_analysis
+from src.sa.static_analysis import execute_static_analysis, GebalangException
 from test.utils import *
 
 
