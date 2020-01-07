@@ -1,6 +1,7 @@
 from src.ast import *
 from src.codegen.create_constant import create_constant_number
-from src.codegen.util import calculate_shifted_index, get_array_const_index_address
+from src.codegen.util import get_array_const_index_address
+from src.codegen.array_variable_access import load_array_variable_accessed_value
 
 
 class WriteCgStrat:
@@ -19,15 +20,14 @@ class WriteCgStrat:
                 return WriteCgStrat.handle_variable(codegen, identifier)
             if isinstance(identifier, IdentifierArrayNumber):
                 return WriteCgStrat.handle_array_with_const_index(codegen, identifier)
-            if isinstance(identifier, IdentifierVariable):
-                return "TODO IMPLEMENT THIS" #TODO
+            if isinstance(identifier, IdentifierArrayVariable):
+                return WriteCgStrat.handle_array_with_variable_index(codegen, identifier)
 
     @staticmethod
     def handle_array_with_const_index(codegen, identifier):
         addr = get_array_const_index_address(codegen, identifier)
         return f"""LOAD {addr}
 PUT \n"""
-
 
     @staticmethod
     def handle_variable(codegen, identifier):
@@ -36,16 +36,15 @@ PUT \n"""
 PUT \n"""
 
     @staticmethod
+    def handle_array_with_variable_index(codegen, identifier):
+        code = ""
+        code += load_array_variable_accessed_value(codegen, identifier)
+        code += "PUT\n"
+        return code
+
+    @staticmethod
     def handle_constant_case(node):
-        result = ""
-        result += create_constant_number(node.value.value)
-        result = put(result)
-        return result
-
-
-def put(result):
-    result += "PUT"
-    return result
-
-
-
+        code = ""
+        code += create_constant_number(node.value.value)
+        code += "PUT\n"
+        return code

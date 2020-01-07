@@ -1,4 +1,4 @@
-STARTING_MEMORY = 1
+STARTING_MEMORY = 5
 
 
 class VirtualMemory:

@@ -1,4 +1,4 @@
-def create_constant_number(num):
+def create_constant_number(num, storage_addr=0):
     is_negative = num < 0
     if is_negative:
         num = -num
@@ -12,7 +12,13 @@ def create_constant_number(num):
             num -= 1
             result = dec() + result if is_negative else inc() + result
     result = clear_register() + result
+    if storage_addr != 0:
+        result += store_to_addr(storage_addr)
     return result
+
+
+def store_to_addr(addr):
+    return f"STORE {addr}\n"
 
 
 def clear_register():
