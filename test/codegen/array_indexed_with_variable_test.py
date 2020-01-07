@@ -1,7 +1,7 @@
 from test.utils import *
 
 
-class TestWriteConstant:
+class TestArrayIndexedWithVariable:
     def test_should_write_valid_value(self):
         simple_program_string = """
                                  DECLARE a, b(-50:50) BEGIN

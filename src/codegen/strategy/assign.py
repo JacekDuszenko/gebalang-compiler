@@ -1,11 +1,12 @@
 from src.ast import *
+from src.codegen.binary_expr import execute_and_load_binary_expression
 from src.codegen.create_constant import create_constant_number
 from src.codegen.util import calculate_shifted_index, get_array_const_index_address
 from src.codegen.array_variable_access import load_array_variable_accessed_value, load_array_variable_addr
 
 """
 USED REGISTERS:
-0, 1, 2, 3
+0, 1, 2, 3, 4, 5
 """
 
 
@@ -21,19 +22,23 @@ class AssignCgStrat:
         if isinstance(node.identifier, IdentifierArrayVariable):
             code += load_array_variable_addr_to_three(codegen, node.identifier)
             if isinstance(expr, UnaryExpression):
-                code += load_unary_expression_to_register(codegen, expr)
+                code += load_unary_expression(codegen, expr)
                 code += store_under_addr_in_three()
                 return code
             if isinstance(expr, BinaryExpression):
-                return """IMPLEMENT THIS"""  # TODO
+                code += execute_and_load_binary_expression(codegen, expr)  # wykonaj wyrażenie i przechowaj wynik w 0
+                code += store_under_addr_in_three()  # załaduj wyrażenie do tego co jest pod adresem w 3
+                return code
         else:
             receiver_addr = get_receiver_addr(codegen, node.identifier)
             if isinstance(expr, UnaryExpression):
-                code += load_unary_expression_to_register(codegen, expr)
+                code += load_unary_expression(codegen, expr)
                 code += f"STORE {receiver_addr}\n"
                 return code
             if isinstance(expr, BinaryExpression):
-                return """IMPLEMENT THIS"""  # TODO
+                code += execute_and_load_binary_expression(codegen, expr)
+                code += f"STORE {receiver_addr}\n"  # załaduj wyrażenie do adresu zmiennej w której trzeba je przechować
+                return code
 
 
 def load_array_variable_addr_to_three(codegen, identifier):
@@ -43,7 +48,7 @@ def load_array_variable_addr_to_three(codegen, identifier):
     return code
 
 
-def load_unary_expression_to_register(codegen, expr):
+def load_unary_expression(codegen, expr):
     value = expr.expression
     if value.is_leaf():
         number = value.value

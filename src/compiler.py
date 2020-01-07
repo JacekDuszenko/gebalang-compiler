@@ -10,7 +10,7 @@ lex = lexer
 yacc = parser
 
 
-def compile_gebalang(code, debug=False):
+def compile_gebalang(code):
     ptree = yacc.parse(input=code, lexer=lex)
     globals = execute_static_analysis(ptree)
     codegen = create_code_generator(ptree, globals)
@@ -19,10 +19,9 @@ def compile_gebalang(code, debug=False):
 
 if __name__ == "__main__":
     handle_wrong_input(sys.argv)
-    debug = is_debug(sys.argv)
     with open(sys.argv[1]) as in_file:
-        gebalang_code = in_file.read()
+        code = in_file.read()
         try:
-            compile_gebalang(gebalang_code, debug)
+            compile_gebalang(code)
         except GebalangException:
             exit(1)

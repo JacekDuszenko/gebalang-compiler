@@ -12,10 +12,6 @@ def print_usage():
     """)
 
 
-def is_debug(argv):
-    return len(argv) == 4 and argv[3] is '-d'
-
-
 def handle_wrong_input(argv):
     if len(argv) < 3:
         print_usage()
@@ -64,4 +60,3 @@ def execute_printing(indent, k, v):
         pp(v, indent)
     else:
         print(' ' * indent + k + ': ' + str(v))
-
