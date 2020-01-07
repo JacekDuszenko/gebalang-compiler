@@ -14,10 +14,10 @@ def execute_and_load_binary_expression(codegen, expr):
     left = expr.left
     right = expr.right
     operator = expr.type
-    if left.is_leaf() and right.is_leaf():  # case 1: both constant, compute during compile time
+    if left.is_leaf() and right.is_leaf(): 
         code += compute_and_store_constant_in_memory(left.value, right.value, operator)
         return code
-    else:  # case 2: some is not constant
+    else:
         if left.is_leaf():
             lval = left.value
             code += create_constant_number(lval, storage_addr=4)
@@ -54,7 +54,7 @@ def execute_subtraction(codegen):
     return "LOAD 4\n SUB 5\n"
 
 
-def execute_multiplication(codegen):  # TODO log complexity in those guys
+def execute_multiplication(codegen):  # TODO lg(n) complexity in those guys, how to :( ?
     pass
 
 

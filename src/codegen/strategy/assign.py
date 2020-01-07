@@ -26,8 +26,8 @@ class AssignCgStrat:
                 code += store_under_addr_in_three()
                 return code
             if isinstance(expr, BinaryExpression):
-                code += execute_and_load_binary_expression(codegen, expr)  # wykonaj wyrażenie i przechowaj wynik w 0
-                code += store_under_addr_in_three()  # załaduj wyrażenie do tego co jest pod adresem w 3
+                code += execute_and_load_binary_expression(codegen, expr)
+                code += store_under_addr_in_three()
                 return code
         else:
             receiver_addr = get_receiver_addr(codegen, node.identifier)
@@ -37,7 +37,7 @@ class AssignCgStrat:
                 return code
             if isinstance(expr, BinaryExpression):
                 code += execute_and_load_binary_expression(codegen, expr)
-                code += f"STORE {receiver_addr}\n"  # załaduj wyrażenie do adresu zmiennej w której trzeba je przechować
+                code += f"STORE {receiver_addr}\n"
                 return code
 
 
