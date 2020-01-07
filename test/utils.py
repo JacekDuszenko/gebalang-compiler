@@ -56,6 +56,7 @@ def run_vm(simple_program_string, input=None, delete_assembly=True):
     globals = execute_static_analysis(ptree)
     codegen = create_code_generator(ptree, globals)
     vm_code = codegen.generate_vm_code()
+    print(vm_code)
     filename = write_vm_code_to_file(vm_code)
     ps = subprocess.run(['../maszyna-wirtualna', filename], capture_output=True, input=input)
     if delete_assembly:

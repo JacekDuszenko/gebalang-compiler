@@ -14,7 +14,7 @@ def execute_and_load_binary_expression(codegen, expr):
     left = expr.left
     right = expr.right
     operator = expr.type
-    if left.is_leaf() and right.is_leaf(): 
+    if left.is_leaf() and right.is_leaf():
         code += compute_and_store_constant_in_memory(left.value, right.value, operator)
         return code
     else:
@@ -51,7 +51,7 @@ def execute_addition(codegen):
 
 
 def execute_subtraction(codegen):
-    return "LOAD 4\n SUB 5\n"
+    return "LOAD 4\nSUB 5\n"
 
 
 def execute_multiplication(codegen):  # TODO lg(n) complexity in those guys, how to :( ?
