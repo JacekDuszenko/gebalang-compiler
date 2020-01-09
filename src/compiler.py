@@ -5,7 +5,6 @@ from src.lexer import lexer
 from src.parser import parser
 from src.sa.static_analysis import execute_static_analysis
 from src.util import *
-from src.codegen.labels import resolve_labels
 
 lex = lexer
 yacc = parser
@@ -13,9 +12,10 @@ yacc = parser
 
 def compile_gebalang(code):
     ptree = yacc.parse(input=code, lexer=lex)
-    globals = execute_static_analysis(ptree)
-    codegen = create_code_generator(ptree, globals)
+    declarations = execute_static_analysis(ptree)
+    codegen = create_code_generator(ptree, declarations)
     vm_code = codegen.generate_vm_code()
+    print(vm_code)
     return vm_code
 
 

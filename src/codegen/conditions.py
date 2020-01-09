@@ -51,7 +51,7 @@ def execute_evaluation(codegen, cond_type, node_id, command):  # ADJUST LABEL NA
 
 def create_passed_label(cmd):
     if isinstance(cmd, IfThenElseCommand):
-        pass
+        return lambda id: exec_start_label(id)
     if isinstance(cmd, IfThenCommand):
         return lambda id: exec_start_label(id)
     if isinstance(cmd, WhileCommand):
@@ -66,7 +66,7 @@ def create_passed_label(cmd):
 
 def create_failed_label(cmd):
     if isinstance(cmd, IfThenElseCommand):
-        pass
+        return lambda id: exec_else_label(id)
     if isinstance(cmd, IfThenCommand):
         return lambda id: exec_end_label(id)
     if isinstance(cmd, WhileCommand):

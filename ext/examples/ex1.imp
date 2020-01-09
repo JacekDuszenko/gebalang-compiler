@@ -1,14 +1,10 @@
-DECLARE
-    a
+DECLARE a
 BEGIN
-   a ASSIGN 20;
-   IF a EQ 20 THEN
-   WRITE 50;
-   ENDIF
+    READ a;
 
-   a ASSIGN 50;
-
-   IF a EQ 50 THEN
-   WRITE 102;
-   ENDIF
+    IF a GE 100 THEN
+        WRITE 3;
+    ELSE
+        WRITE 10;
+    ENDIF
 END

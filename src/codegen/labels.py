@@ -1,6 +1,7 @@
 EXEC_START = 'EXEC_START'
 EXEC_END = 'EXEC_END'
 COND_EVAL_START = 'COND_EVAL_START'
+EXEC_ELSE = 'EXEC_ELSE'
 
 
 def exec_start_label(id):
@@ -9,6 +10,10 @@ def exec_start_label(id):
 
 def exec_end_label(id):
     return f'#{EXEC_END}_{id}\n'
+
+
+def exec_else_label(id):
+    return f'#{EXEC_ELSE}_{id}\n'
 
 
 def cond_eval_start_label(id):
