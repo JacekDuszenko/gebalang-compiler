@@ -1,10 +1,8 @@
 import math
 
 from src.ast import *
-from src.codegen.array_variable_access import load_array_variable_accessed_value
 from src.codegen.create_constant import create_constant_number
-
-from src.codegen.util import get_array_const_index_address
+from src.codegen.value_storage import store_variable_in_reg
 
 """USED REGISTERS: 0, 1, 2, 3, 4, 5"""
 
@@ -64,20 +62,6 @@ def execute_division(codegen):
 
 def execute_modulus(codegen):
     pass
-
-
-def store_variable_in_reg(codegen, identifier, storage_addr=0):
-    variable_name = identifier.variable
-    if isinstance(identifier, IdentifierVariable):
-        variable_addr = codegen.get_address_by_variable_name(variable_name)
-        return f"LOAD {variable_addr}\nSTORE {storage_addr}\n"
-    if isinstance(identifier, IdentifierArrayNumber):
-        array_index_addr = get_array_const_index_address(codegen, identifier)
-        return f"LOAD {array_index_addr}\nSTORE {storage_addr}\n"
-    if isinstance(identifier, IdentifierArrayVariable):
-        code = load_array_variable_accessed_value(codegen, identifier)
-        code += f"STORE {storage_addr}\n"
-        return code
 
 
 def compute_and_store_constant_in_memory(l, r, operator):

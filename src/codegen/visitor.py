@@ -1,5 +1,6 @@
 from src.codegen.strategy_factory import create_visit_strats
 from src.sa.visitors import Visitor
+from src.ast import *
 
 
 class CodeGenVisitor(Visitor):
@@ -13,8 +14,9 @@ class CodeGenVisitor(Visitor):
             if strat.is_applicable(node):
                 code += strat.apply(self, node, self.cgen)
                 break
-        children_code = self.visit_children(node)
-        return code + children_code
+        if not node_in_labeled_nodes(node):
+            code += self.visit_children(node)
+        return code
 
     def visit_children(self, node):
         children_code = ""
@@ -22,3 +24,12 @@ class CodeGenVisitor(Visitor):
         for child in children:
             children_code += self.visit(child)
         return children_code
+
+
+def node_in_labeled_nodes(node):
+    return isinstance(node, IfThenElseCommand) \
+           or isinstance(node, IfThenCommand) \
+           or isinstance(node, WhileCommand) \
+           or isinstance(node, DoWhileCommand) \
+           or isinstance(node, ForDownToCommand) \
+           or isinstance(node, ForUpToCommand)

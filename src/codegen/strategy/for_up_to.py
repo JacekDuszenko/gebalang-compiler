@@ -7,6 +7,6 @@ class ForUpToCgStrat:
     def is_applicable(node):
         return isinstance(node, ForUpToCommand)
 
-    @staticmethod
-    def apply(visitor, node, codegen):
+
+    def apply(self, visitor, node, codegen):
         return ""

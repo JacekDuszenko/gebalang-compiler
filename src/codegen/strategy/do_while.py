@@ -7,6 +7,6 @@ class DoWhileCgStrat:
     def is_applicable(node):
         return isinstance(node, DoWhileCommand)
 
-    @staticmethod
-    def apply(visitor, node, codegen):
+
+    def apply(self, visitor, node, codegen):
         return ""

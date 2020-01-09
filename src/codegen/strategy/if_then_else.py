@@ -7,6 +7,5 @@ class IfThenElseCgStrat:
     def is_applicable(node):
         return isinstance(node, IfThenElseCommand)
 
-    @staticmethod
-    def apply(visitor, node, codegen):
+    def apply(self, visitor, node, codegen):
         return ""

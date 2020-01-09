@@ -1,9 +1,8 @@
 DECLARE
-    a, b, c(10:200),d,e,f,g,h,j,k,l
+    a
 BEGIN
-    READ a;
-    WRITE a;
-    READ b;
-    WRITE b;
-
+   a ASSIGN 20;
+   IF a EQ 20 THEN
+   WRITE 50;
+   ENDIF
 END
