@@ -5,4 +5,10 @@ BEGIN
    IF a EQ 20 THEN
    WRITE 50;
    ENDIF
+
+   a ASSIGN 50;
+
+   IF a EQ 50 THEN
+   WRITE 102;
+   ENDIF
 END
