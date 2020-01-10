@@ -1,6 +1,6 @@
 from src.ast import *
-from src.codegen.value_storage import store_value_in_register
 from src.codegen.labels import *
+from src.codegen.value_storage import store_value_in_register
 
 EQUAL = 'EQ'
 NOT_EQUAL = 'NEQ'
@@ -55,9 +55,9 @@ def create_passed_label(cmd):
     if isinstance(cmd, IfThenCommand):
         return lambda id: exec_start_label(id)
     if isinstance(cmd, WhileCommand):
-        pass
+        return lambda id: start_loop_label(id)
     if isinstance(cmd, DoWhileCommand):
-        pass
+        return lambda id: start_loop_label(id)
     if isinstance(cmd, ForDownToCommand):
         pass
     if isinstance(cmd, ForUpToCommand):
@@ -70,9 +70,9 @@ def create_failed_label(cmd):
     if isinstance(cmd, IfThenCommand):
         return lambda id: exec_end_label(id)
     if isinstance(cmd, WhileCommand):
-        pass
+        return lambda id: end_loop_label(id)
     if isinstance(cmd, DoWhileCommand):
-        pass
+        return lambda id: end_loop_label(id)
     if isinstance(cmd, ForDownToCommand):
         pass
     if isinstance(cmd, ForUpToCommand):

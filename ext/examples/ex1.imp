@@ -1,10 +1,8 @@
 DECLARE a
 BEGIN
     READ a;
-
-    IF a GE 100 THEN
-        WRITE 3;
-    ELSE
-        WRITE 10;
-    ENDIF
+    DO
+        WRITE 1;
+        a ASSIGN a PLUS 1;
+    WHILE a NEQ 10 ENDDO
 END

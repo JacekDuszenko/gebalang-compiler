@@ -2,6 +2,8 @@ EXEC_START = 'EXEC_START'
 EXEC_END = 'EXEC_END'
 COND_EVAL_START = 'COND_EVAL_START'
 EXEC_ELSE = 'EXEC_ELSE'
+START_LOOP = 'START_LOOP'
+END_LOOP = 'END_LOOP'
 
 
 def exec_start_label(id):
@@ -18,6 +20,14 @@ def exec_else_label(id):
 
 def cond_eval_start_label(id):
     return f'#{COND_EVAL_START}_{id}\n'
+
+
+def start_loop_label(id):
+    return f'#{START_LOOP}_{id}\n'
+
+
+def end_loop_label(id):
+    return f'#{END_LOOP}_{id}\n'
 
 
 def resolve_labels(code):
