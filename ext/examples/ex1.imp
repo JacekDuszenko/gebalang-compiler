@@ -1,8 +1,11 @@
-DECLARE a
+DECLARE a,b,c
 BEGIN
     READ a;
-    DO
-        WRITE 1;
-        a ASSIGN a PLUS 1;
-    WHILE a NEQ 10 ENDDO
+    READ b;
+    FOR i FROM a DOWNTO 0 DO
+        FOR j FROM b DOWNTO 0 DO
+            c ASSIGN i PLUS j;
+            WRITE c;
+        ENDFOR
+    ENDFOR
 END

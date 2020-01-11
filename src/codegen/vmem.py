@@ -1,10 +1,23 @@
 STARTING_MEMORY = 6
+ENDING_MEMORY = 2 ** 62 -1
 
 
 class VirtualMemory:
     def __init__(self):
         self.memory = {}
         self.memory_counter = STARTING_MEMORY
+        self.local_memory_counter = ENDING_MEMORY
+
+    def allocate_memory_for_local_variable(self, variable_name, variable_declaration):
+        var_cell = VariableMemoryCell(self, variable_name, variable_declaration)
+        self.memory[self.local_memory_counter] = var_cell
+        variable_declaration.addr = self.local_memory_counter
+        self.local_memory_counter -= 1
+        return var_cell
+
+    def pop_local_variable(self):
+        self.local_memory_counter += 1
+        del(self.memory[self.local_memory_counter])
 
     def allocate_memory_for_variable(self, variable_name, variable_declaration):
         var_cell = VariableMemoryCell(variable_declaration, variable_name, self.memory_counter)
