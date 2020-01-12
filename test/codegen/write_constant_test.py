@@ -8,7 +8,7 @@ class TestWriteConstant:
                                  WRITE 10;
                                  END
                                  """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 10
 
@@ -18,7 +18,7 @@ class TestWriteConstant:
                                     WRITE 0;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 0
 
@@ -28,7 +28,7 @@ class TestWriteConstant:
                                     WRITE -500;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -500
 
@@ -39,7 +39,7 @@ class TestWriteConstant:
                                     WRITE {two_to_sixty_two};
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 2 ** 62
 
@@ -50,7 +50,7 @@ class TestWriteConstant:
                                     WRITE {two_to_sixty_two};
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -2 ** 62
 
@@ -60,7 +60,7 @@ class TestWriteConstant:
                                     WRITE -3;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -3
 
@@ -77,7 +77,7 @@ class TestWriteConstant:
                                        WRITE 0;
                                        END
                                        """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -3
         assert int(out[1]) == 1024

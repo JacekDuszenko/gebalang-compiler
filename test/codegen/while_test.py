@@ -17,7 +17,7 @@ class TestWhile:
                                   END
                                  """
         inp = b'0 10'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 2
         assert int(out[1]) == 2
@@ -49,7 +49,7 @@ class TestWhile:
                                   ENDWHILE
                                   END
                                  """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         for r in out:
             assert int(r) is 2
@@ -72,7 +72,7 @@ class TestWhile:
                                      END
                                     """
         inp = b'0 10'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         for r in out:
             assert int(r) is 5

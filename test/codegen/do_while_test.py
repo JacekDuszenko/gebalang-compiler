@@ -17,7 +17,7 @@ class TestDoWhile:
                                   END
                                  """
         inp = b'0'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert len(out) == 100
         for i, r in enumerate(out):
@@ -38,7 +38,7 @@ class TestDoWhile:
                                   END
                                  """
         inp = b'100'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert len(out) == 100
         for i, r in enumerate(out):
@@ -66,7 +66,7 @@ class TestDoWhile:
                                   END
                                  """
         inp = b'0 0 0 '
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert len(out) == 1000
         for o in out:

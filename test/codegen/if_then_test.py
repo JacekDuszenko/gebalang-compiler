@@ -17,7 +17,7 @@ class TestIfThen:
                                   END
                                  """
         inp = b'500 700'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 500
 
@@ -33,7 +33,7 @@ class TestIfThen:
                                   END
                                  """
         inp = b'500 700'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 5
         assert int(out[1]) == 10
@@ -50,7 +50,7 @@ class TestIfThen:
                                   END
                                  """
         inp = b'20 20'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 5
         assert int(out[1]) == 10
@@ -67,7 +67,7 @@ class TestIfThen:
                                   END
                                  """
         inp = b'20 21'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 5
         assert int(out[1]) == 10
@@ -84,7 +84,7 @@ class TestIfThen:
                                   END
                                  """
         inp = b'-50 -49'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 5
         assert int(out[1]) == 10
@@ -101,7 +101,7 @@ class TestIfThen:
                                   END
                                  """
         inp = b'-50 -50'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 5
         assert int(out[1]) == 10
@@ -118,7 +118,7 @@ class TestIfThen:
                                   END
                                  """
         inp = b'-49 -50'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 5
         assert int(out[1]) == 10
@@ -135,7 +135,7 @@ class TestIfThen:
                                   END
                                  """
         inp = b'-50 -50'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 5
         assert int(out[1]) == 10
@@ -152,7 +152,7 @@ class TestIfThen:
                                      END
                                     """
         inp = b'700 500'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 10
 
@@ -168,7 +168,7 @@ class TestIfThen:
                                      END
                                     """
         inp = b'21 20'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 10
 
@@ -184,7 +184,7 @@ class TestIfThen:
                                      END
                                     """
         inp = b'0 0'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 10
 
@@ -200,7 +200,7 @@ class TestIfThen:
                                      END
                                     """
         inp = b'-48 -49'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 10
 
@@ -216,7 +216,7 @@ class TestIfThen:
                                      END
                                     """
         inp = b'0 1'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 10
 
@@ -235,7 +235,7 @@ class TestIfThen:
                                      END
                                     """
         inp = b'2 1 0'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 1
         assert int(out[1]) == 2
@@ -255,7 +255,7 @@ class TestIfThen:
                                      END
                                     """
         inp = b'2 1 3'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 1
         assert len(out) == 1
@@ -295,7 +295,7 @@ class TestIfThen:
                                      END
                                     """
         inp = b'10 5 2'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 1
         assert int(out[1]) == 0

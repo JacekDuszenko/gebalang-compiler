@@ -17,7 +17,7 @@ class TestForUpTo:
                                 END
                                  """
         inp=b'10 20 '
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert len(out) == 11 * 21
 
@@ -35,7 +35,7 @@ class TestForUpTo:
                                 END
                                  """
         inp=b'10 20 '
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert len(out) == 2049
         for i, a in enumerate(range(-1024,1025)):
@@ -53,7 +53,7 @@ class TestForUpTo:
                                 END
                                  """
         inp = b'0 100'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert len(out) == 101
         valid_i = 0

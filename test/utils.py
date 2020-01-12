@@ -1,5 +1,6 @@
 import os
 import random
+import re
 import string
 import subprocess
 import time
@@ -63,10 +64,19 @@ def run_vm(simple_program_string, input=None, delete_assembly=True):
         os.remove(filename)
     lines = [l.decode('utf-8') for l in ps.stdout.split(b'\n')]
     output_lines = []
+    cost = extract_cost(lines)
     for l in lines:
         extract_output(l, output_lines)
 
-    return output_lines, ps.stderr, vm_code
+    return output_lines, ps.stderr, vm_code, cost
+
+
+def extract_cost(lines):
+    rgx = re.compile(r"Skończono program \(koszt: (\d+)\)*")
+    for l in lines:
+         if rgx.search(l) is not None:
+             return int(rgx.search(l).group(1))
+    return -1
 
 
 def extract_output(line, result_list):
@@ -75,4 +85,3 @@ def extract_output(line, result_list):
         sub = after_pt[1].split('\n', 1)
         if len(sub) >= 1:
             result_list.append(sub[0])
-

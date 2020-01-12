@@ -14,7 +14,7 @@ class TestArrayIndexedWithVariable:
                                  WRITE b(a);
                                  END
                                  """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost = run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 10
         assert int(out[1]) == 10
@@ -37,7 +37,7 @@ class TestArrayIndexedWithVariable:
                                  END
                                  """
         input = b'-2 -1 0 1 2'
-        out, err, asm = run_vm(simple_program_string,input=input)
+        out, err, asm, cost = run_vm(simple_program_string,input=input)
         assert err is b''
         assert int(out[0]) == 10
         assert int(out[1]) == 9
@@ -66,7 +66,7 @@ class TestArrayIndexedWithVariable:
                                  END
                                  """
         input = b'15 -50 200000 -1333333333'
-        out, err, asm = run_vm(simple_program_string, input=input)
+        out, err, asm, cost = run_vm(simple_program_string, input=input)
         assert err is b''
         assert int(out[0]) == 15
         assert int(out[1]) == -50
@@ -93,7 +93,7 @@ class TestArrayIndexedWithVariable:
                                  END
                                  """
         input = b'0 50 5 123 -5 -500'
-        out, err, asm = run_vm(simple_program_string, input=input)
+        out, err, asm, cost = run_vm(simple_program_string, input=input)
         assert err is b''
         assert int(out[0]) == 50
         assert int(out[1]) == 123
@@ -117,7 +117,7 @@ class TestArrayIndexedWithVariable:
                                  END
                                  """
         input = b'0 420 100 -321'
-        out, err, asm = run_vm(simple_program_string, input=input)
+        out, err, asm, cost = run_vm(simple_program_string, input=input)
         print(asm)
         assert err is b''
         assert int(out[0]) == -50000

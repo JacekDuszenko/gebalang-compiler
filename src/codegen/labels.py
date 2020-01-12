@@ -5,6 +5,52 @@ EXEC_ELSE = 'EXEC_ELSE'
 START_LOOP = 'START_LOOP'
 END_LOOP = 'END_LOOP'
 
+MUL_START_LABEL = 'MUL_START'
+MUL_ZERO_LABEL = 'MUL_ZERO'
+MUL_DONE_LABEL = 'MUL_DONE'
+MUL_L_EVEN_LABEL = 'MUL_L_EVEN'
+MUL_L_ODD_LABEL = 'MUL_L_ODD'
+MUL_DONE_NEG_RESULT_LABEL = 'MUL_DONE_NEG_RESULT'
+MUL_LEFT_POSITIVE_LABEL = 'MUL_LEFT_POSITIVE'
+MUL_RIGHT_POSITIVE_LABEL = 'MUL_RIGHT_POSITIVE'
+MUL_DO_NOT_SWAP_LABEL = 'MUL_DO_NOT_SWAP'
+
+
+def mul_do_not_swap_label(id):
+    return f'#{MUL_DO_NOT_SWAP_LABEL}_{id}\n'
+
+
+def mul_right_positive_label(id):
+    return f'#{MUL_RIGHT_POSITIVE_LABEL}_{id}\n'
+
+
+def mul_left_positive_label(id):
+    return f'#{MUL_LEFT_POSITIVE_LABEL}_{id}\n'
+
+
+def mul_l_odd_label(id):
+    return f'#{MUL_L_ODD_LABEL}_{id}\n'
+
+
+def mul_l_even_label(id):
+    return f'#{MUL_L_EVEN_LABEL}_{id}\n'
+
+
+def mul_start_label(id):
+    return f'#{MUL_START_LABEL}_{id}\n'
+
+
+def mul_done_neg_result_label(id):
+    return f'#{MUL_DONE_NEG_RESULT_LABEL}_{id}\n'
+
+
+def mul_done_label(id):
+    return f'#{MUL_DONE_LABEL}_{id}\n'
+
+
+def mul_zero_label(id):
+    return f'#{MUL_ZERO_LABEL}_{id}\n'
+
 
 def exec_start_label(id):
     return f'#{EXEC_START}_{id}\n'

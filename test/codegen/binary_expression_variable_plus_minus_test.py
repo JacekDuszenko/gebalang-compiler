@@ -11,7 +11,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                   END
                                  """
         inp=b'10'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 20
 
@@ -24,7 +24,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                   END
                                  """
         inp=b'10'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 0
 
@@ -37,7 +37,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                   END
                                  """
         inp=b'10'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == -30
 
@@ -50,7 +50,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                   END
                                  """
         inp=b'40'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == -80
 
@@ -64,7 +64,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                   END
                                  """
         inp=b'1 2'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 3
 
@@ -78,7 +78,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                      END
                                     """
         inp = b'1 2'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == -1
 
@@ -92,7 +92,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                      END
                                     """
         inp = b'1 15'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 16
 
@@ -106,7 +106,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                      END
                                     """
         inp = b'1 0'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 1
 
@@ -121,7 +121,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                      END
                                     """
         inp = b'3 100 -100'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 0
 
@@ -136,7 +136,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                      END
                                     """
         inp = b'3 100 -100'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == -200
 
@@ -156,7 +156,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                      END
                                     """
         inp = b'0 0 0 2'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 0
         assert int(out[1]) == 4
@@ -183,7 +183,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                      WRITE a;
                                      END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 0
         assert int(out[1]) == 1
@@ -215,7 +215,7 @@ class TestBinaryExpressionVariablePlusMinus:
                                      WRITE a;
                                      END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 0
         assert int(out[1]) == -1

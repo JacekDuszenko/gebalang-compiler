@@ -17,7 +17,7 @@ class TestForDownto:
                                 END
                                  """
         inp = b'10 20 '
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert len(out) == 11 * 21
 
@@ -35,7 +35,7 @@ class TestForDownto:
                                 END
                                  """
         inp = b'10 20 '
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert len(out) == 2049
         for i, a in enumerate(range(1024, -1025, -1)):
@@ -72,14 +72,14 @@ class TestForDownto:
 
                                          """
         inp = b'0 0 0 '
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 31000
         assert int(out[1]) == 40900
         assert int(out[2]) == 2222010
 
         inp = b'1 0 2'
-        out, err, asm = run_vm(simple_program_string, input=inp)
+        out, err, asm, cost =  run_vm(simple_program_string, input=inp)
         assert err is b''
         assert int(out[0]) == 31001
         assert int(out[1]) == 40900

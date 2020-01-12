@@ -26,7 +26,7 @@ class TestAssignUnaryExpression:
                                  END
                                  """
         a = b'1337'
-        out, err, asm = run_vm(simple_program_string, input=a)
+        out, err, asm, cost =  run_vm(simple_program_string, input=a)
         assert err is b''
         assert int(out[0]) == 1337  # a
         assert int(out[1]) == 1337  # b
@@ -51,7 +51,7 @@ class TestAssignUnaryExpression:
                                  END
                                  """
         a = b'-500'
-        out, err, asm = run_vm(simple_program_string, input=a)
+        out, err, asm, cost =  run_vm(simple_program_string, input=a)
         assert err is b''
         assert int(out[0]) == -500
         assert int(out[1]) == -1337
@@ -70,7 +70,7 @@ class TestAssignUnaryExpression:
                                  END
                                  """
         a = b'123 -10001'
-        out, err, asm = run_vm(simple_program_string, input=a)
+        out, err, asm, cost =  run_vm(simple_program_string, input=a)
         assert err is b''
         assert int(out[0]) == -10001
         assert int(out[1]) == 123
@@ -89,7 +89,7 @@ class TestAssignUnaryExpression:
                                  END
                                  """
         a = b'123 -10001'
-        out, err, asm = run_vm(simple_program_string, input=a)
+        out, err, asm, cost =  run_vm(simple_program_string, input=a)
         assert err is b''
         assert int(out[0]) == -10001
         assert int(out[1]) == 123

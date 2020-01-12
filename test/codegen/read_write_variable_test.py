@@ -18,7 +18,7 @@ class TestWriteRead:
                                  END
                                  """
         a = b'10 20 30 0 1'
-        out, err, asm = run_vm(simple_program_string, input=a)
+        out, err, asm, cost =  run_vm(simple_program_string, input=a)
         assert err is b''
         assert int(out[0]) == 10
         assert int(out[1]) == 20
@@ -39,7 +39,7 @@ class TestWriteRead:
                                END
                                  """
         input_values = b'1337 0 -530'
-        out, err, asm = run_vm(simple_program_string, input=input_values)
+        out, err, asm, cost =  run_vm(simple_program_string, input=input_values)
         assert err is b''
         assert int(out[0]) == 1337
         assert int(out[1]) == 0
@@ -64,7 +64,7 @@ class TestWriteRead:
                                END
                                  """
         input_values = b'1337 0 -530 -1 -2 -3'
-        out, err, asm = run_vm(simple_program_string, input=input_values)
+        out, err, asm, cost =  run_vm(simple_program_string, input=input_values)
         assert err is b''
         assert int(out[0]) == 1337
         assert int(out[1]) == 0

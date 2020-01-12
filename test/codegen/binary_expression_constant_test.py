@@ -9,7 +9,7 @@ class TestBinaryExpression:
                                  WRITE c;
                                  END
                                  """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 3
 
@@ -20,7 +20,7 @@ class TestBinaryExpression:
                                  WRITE c;
                                  END
                                  """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -3
 
@@ -31,7 +31,7 @@ class TestBinaryExpression:
                                  WRITE c;
                                  END
                                  """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -10
 
@@ -42,7 +42,7 @@ class TestBinaryExpression:
                                  WRITE c;
                                  END
                                  """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -7
 
@@ -53,7 +53,7 @@ class TestBinaryExpression:
                                  WRITE c;
                                  END
                                  """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 1000000 * 100000000
 
@@ -64,7 +64,7 @@ class TestBinaryExpression:
                                  WRITE c;
                                  END
                                  """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -75
 
@@ -75,7 +75,7 @@ class TestBinaryExpression:
                                  WRITE c;
                                  END
                                  """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 250
 
@@ -86,7 +86,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 0
 
@@ -97,7 +97,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 0
 
@@ -108,7 +108,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 0
 
@@ -119,7 +119,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 0
 
@@ -130,7 +130,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 0
 
@@ -141,7 +141,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -3
 
@@ -152,7 +152,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -1
 
@@ -163,7 +163,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost = run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 2
 
@@ -174,7 +174,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost = run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 1
 
@@ -185,7 +185,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost = run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 2
 
@@ -196,7 +196,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost = run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -1
 
@@ -207,7 +207,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost = run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -2
 
@@ -218,7 +218,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost = run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -1
 
@@ -229,7 +229,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost = run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -2
 
@@ -240,7 +240,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost = run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 1
 
@@ -251,7 +251,7 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost = run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 1
 
@@ -262,6 +262,6 @@ class TestBinaryExpression:
                                     WRITE c;
                                     END
                                     """
-        out, err, asm = run_vm(simple_program_string)
+        out, err, asm, cost = run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == -3
