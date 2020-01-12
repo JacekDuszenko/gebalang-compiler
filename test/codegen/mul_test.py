@@ -1,7 +1,7 @@
 from test.utils import *
 
 
-class TestWriteRead:
+class TestMultiplication:
     def tests_mul(self):
         simple_program_string = """
                                 DECLARE a, b, c BEGIN

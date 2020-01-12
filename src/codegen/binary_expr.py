@@ -204,8 +204,193 @@ def detect_multiply_by_zero(id):
     return code
 
 
+RIGHT_COPY_REG = 6
+SUM_REG = 7
+TWO_POW_REG = 8
+ONE_CONST_REG = 9
+TEMP_VAL_REG = 10
+IS_NEG_REG = 11
+
+
 def execute_division(codegen):
-    pass
+    """
+    R4 - left value
+    R5 - right value
+    R6 - r copy = rcp
+    R7 - total quotient sum = sum
+    R8 - current 2 pow - two_pow
+    R9 - number one constant value
+    R10 - temp value
+    R11 - is negative flag
+    """
+
+    id = get_id()
+    code = ""
+
+    code += detect_division_by_zero(id)
+    code += initialize_constant_one(id)
+    code += determine_isneg(id)
+    code += div_outer_loop(id)
+    code += div_zero_label(id)
+    return code
+
+
+def determine_isneg(id):
+    code = ""
+    code += f"LOAD {LEFT_VALUE_REG}\n"
+    code += f"JNEG {div_isneg_lneg_label(id)}"
+    code += f"LOAD {RIGHT_VALUE_REG}\n"
+    code += f"JNEG {div_isneg_rneg_label(id)}"
+    code += mark_as_positive(id)
+
+    code += div_isneg_lneg_label(id)
+    code += "SUB 0\n"
+    code += f"SUB {LEFT_VALUE_REG}\n"
+    code += f"STORE {LEFT_VALUE_REG}\n"
+    code += f"LOAD {RIGHT_VALUE_REG}\n"
+    code += f"JNEG {div_isneg_both_neg_label(id)}"
+    code += mark_as_negative(id)  # left is negative, right is positive
+
+    code += div_isneg_rneg_label(id)
+    code += f"SUB 0\n"
+    code += f"SUB {RIGHT_VALUE_REG}\n"
+    code += f"STORE {RIGHT_VALUE_REG}\n"
+    code += mark_as_negative(id) #left is positive, right is negative
+
+    code += div_isneg_both_neg_label(id)
+    code += "SUB 0\n"
+    code += f"SUB {RIGHT_VALUE_REG}\n"
+    code += f"STORE {RIGHT_VALUE_REG}\n"
+    code += mark_as_positive(id)
+
+    code += f"{div_isneg_end_label(id)}"
+    return code
+
+
+def mark_as_positive(id):
+    code = ""
+    code += "SUB 0\n"
+    code += f"STORE {IS_NEG_REG}\n"
+    code += f"JUMP {div_isneg_end_label(id)}"
+    return code
+
+
+def mark_as_negative(id):
+    code = ""
+    code += "SUB 0\n"
+    code += "INC\n"
+    code += f"STORE {IS_NEG_REG}\n"
+    code += f"JUMP {div_isneg_end_label(id)}"
+    return code
+
+
+def initialize_constant_one(id):
+    code = ""
+    code += "SUB 0\n"
+    code += "INC \n"
+    code += f"STORE {ONE_CONST_REG}\n"
+    return code
+
+
+def div_outer_loop(id):
+    code = ""
+    code += f"{div_outer_loop_label(id)}"
+    code += evaluate_exit_outer_loop_condition(id)
+    code += initialize_max_twopow_loop(id)
+    code += max_twopow_loop(id)
+    code += outer_loop_finalize_eval(id)
+    return code
+
+
+def outer_loop_finalize_eval(id):
+    code = ""
+    code += f"{div_finalize_label(id)}"
+    code += f"LOAD {LEFT_VALUE_REG}\n" # remainder
+    code += f"STORE {TEMP_VAL_REG}\n"
+    code += f"LOAD {IS_NEG_REG}\n"
+    code += f"JZERO {div_nothing_to_be_done_in_finalize_label(id)}"
+    code += f"SUB 0\n"
+    code += f"SUB {SUM_REG}\n"
+    code += f"STORE {SUM_REG}\n"
+    code += f"LOAD {TEMP_VAL_REG}\n"
+    code += f"JZERO {div_nothing_to_be_done_in_finalize_label(id)}"
+    code += f"LOAD {SUM_REG}\n"
+    code += f"DEC\n"
+    code += f"STORE {SUM_REG}\n"
+    code += div_nothing_to_be_done_in_finalize_label(id)
+    code += f"LOAD {SUM_REG}\n"
+    return code
+
+
+def max_twopow_loop(id):
+    code = ""
+    code += div_max_two_pow_label(id)
+    code += f"LOAD {LEFT_VALUE_REG}\n"
+    code += f"SUB {RIGHT_COPY_REG}\n"
+    code += f"JPOS {div_max_two_pow_reloop_label(id)}"
+    code += f"JZERO {div_max_two_pow_reloop_label(id)}"
+    code += f"JUMP {div_max_two_pow_exit_label(id)}"
+    code += f"{div_max_two_pow_reloop_label(id)}"
+    code += max_twopow_post_eval_execution(id)
+    code += f"JUMP {div_max_two_pow_label(id)}"
+
+    code += f"{div_max_two_pow_exit_label(id)}"
+    code += twopow_exit_eval_execution(id)
+    return code
+
+
+def twopow_exit_eval_execution(id):
+    code = ""
+    code += f"LOAD {TWO_POW_REG}\n"
+    code += f"DEC \n"
+    code += f"STORE {TWO_POW_REG}\n"
+    code += f"LOAD {ONE_CONST_REG}\n"
+    code += f"SHIFT {TWO_POW_REG}\n"
+    code += f"ADD {SUM_REG}\n"
+    code += f"STORE {SUM_REG}\n"
+    code += f"LOAD {RIGHT_VALUE_REG}\n"
+    code += f"SHIFT {TWO_POW_REG}\n"
+    code += f"STORE {TEMP_VAL_REG}\n"
+    code += f"LOAD {LEFT_VALUE_REG}\n"
+    code += f"SUB {TEMP_VAL_REG}\n"
+    code += f"STORE {LEFT_VALUE_REG}\n"
+    code += f"JUMP {div_outer_loop_label(id)}"
+    return code
+
+
+def max_twopow_post_eval_execution(id):
+    code = ""
+    code += f"LOAD {RIGHT_COPY_REG}\n"
+    code += f"SHIFT {ONE_CONST_REG}\n"
+    code += f"STORE {RIGHT_COPY_REG}\n"
+    code += f"LOAD {TWO_POW_REG}\n"
+    code += f"INC\n"
+    code += f"STORE {TWO_POW_REG}\n"
+    return code
+
+
+def initialize_max_twopow_loop(id):
+    code = ""
+    code += f"SUB 0\n"
+    code += f"STORE {TWO_POW_REG}\n"
+    code += f"LOAD {RIGHT_VALUE_REG}\n"
+    code += f"STORE {RIGHT_COPY_REG}\n"
+    return code
+
+
+def evaluate_exit_outer_loop_condition(id):
+    code = ""
+    code += f"LOAD {LEFT_VALUE_REG}\n"
+    code += f"SUB {RIGHT_VALUE_REG}\n"
+    code += f"JNEG {div_finalize_label(id)}"
+    return code
+
+
+def detect_division_by_zero(id):
+    code = ""
+    code += f"LOAD {RIGHT_VALUE_REG}\n"
+    code += f"JZERO {div_zero_label(id)}"
+    return code
 
 
 def execute_modulus(codegen):

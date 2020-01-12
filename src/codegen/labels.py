@@ -15,6 +15,64 @@ MUL_LEFT_POSITIVE_LABEL = 'MUL_LEFT_POSITIVE'
 MUL_RIGHT_POSITIVE_LABEL = 'MUL_RIGHT_POSITIVE'
 MUL_DO_NOT_SWAP_LABEL = 'MUL_DO_NOT_SWAP'
 
+DIV_ZERO_LABEL = 'DIV_ZERO'
+DIV_OUTER_LOOP_LABEL = 'DIV_OUTER_LOOP'
+DIV_FINALIZE_LABEL = 'DIV_FINALIZE'
+DIV_MAX_TWO_POW_LABEL = 'MAX_TWO_POW'
+DIV_MAX_TWO_POW_RELOOP_LABEL = 'MAX_TWO_POW_RELOOP'
+DIV_MAX_TWO_POW_EXIT_LABEL = 'MAX_TWO_POW_EXIT'
+
+DIV_ISNEG_RNEG_LABEL = 'ISNEG_RNEG'
+DIV_ISNEG_LNEG_LABEL = 'ISNEG_LNEG'
+DIV_ISNEG_BOTH_NEG_LABEL = 'ISNEG_BOTH_NEG'
+DIV_ISNEG_END_LABEL = 'ISNEG_END'
+
+DIV_NOTHING_TO_BE_DONE_IN_FINALIZE = 'NOTHING_TO_BE_DONE_IN_FINALIZE'
+
+
+def div_nothing_to_be_done_in_finalize_label(id):
+    return f'#{DIV_NOTHING_TO_BE_DONE_IN_FINALIZE}_{id}\n'
+
+
+def div_isneg_end_label(id):
+    return f'#{DIV_ISNEG_END_LABEL}_{id}\n'
+
+
+def div_isneg_both_neg_label(id):
+    return f'#{DIV_ISNEG_BOTH_NEG_LABEL}_{id}\n'
+
+
+def div_isneg_lneg_label(id):
+    return f'#{DIV_ISNEG_LNEG_LABEL}_{id}\n'
+
+
+def div_isneg_rneg_label(id):
+    return f'#{DIV_ISNEG_RNEG_LABEL}_{id}\n'
+
+
+def div_max_two_pow_exit_label(id):
+    return f'#{DIV_MAX_TWO_POW_EXIT_LABEL}_{id}\n'
+
+
+def div_max_two_pow_reloop_label(id):
+    return f'#{DIV_MAX_TWO_POW_RELOOP_LABEL}_{id}\n'
+
+
+def div_max_two_pow_label(id):
+    return f'#{DIV_MAX_TWO_POW_LABEL}_{id}\n'
+
+
+def div_finalize_label(id):
+    return f'#{DIV_FINALIZE_LABEL}_{id}\n'
+
+
+def div_outer_loop_label(id):
+    return f'#{DIV_OUTER_LOOP_LABEL}_{id}\n'
+
+
+def div_zero_label(id):
+    return f'#{DIV_ZERO_LABEL}_{id}\n'
+
 
 def mul_do_not_swap_label(id):
     return f'#{MUL_DO_NOT_SWAP_LABEL}_{id}\n'
