@@ -1,11 +1,8 @@
-DECLARE a,b,c
-BEGIN
-    READ a;
-    READ b;
-    FOR i FROM a DOWNTO 0 DO
-        FOR j FROM b DOWNTO 0 DO
-            c ASSIGN i PLUS j;
-            WRITE c;
-        ENDFOR
-    ENDFOR
-END
+     DECLARE a, b, c BEGIN
+                                WHILE 1 EQ 1 DO
+                                READ a;
+                                READ b;
+                                c ASSIGN a MOD b;
+                                WRITE c;
+                                ENDWHILE
+                                END

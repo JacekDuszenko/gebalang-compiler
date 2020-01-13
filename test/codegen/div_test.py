@@ -120,15 +120,6 @@ class TestDiv:
         assert err is b''
         assert int(out[0]) == 3
 
-        """5 / 2 = 2
-            5 / -2 = -3
-            -5 / 2 = -3
-            -5 / -2 = 2
-            7 / 4 = 1
-            7 / -4 = -2
-            -7 / 4 = -2
-            -7 / -4 = 1
-"""
     def test_div_more_numbers(self):
         simple_program_string = """
                                         DECLARE a, b, c BEGIN
@@ -177,3 +168,53 @@ class TestDiv:
         out, err, asm, cost = run_vm(simple_program_string, input=a)
         assert err is b''
         assert int(out[0]) == 1
+
+    def test_zero_left(self):
+        simple_program_string = """
+                                        DECLARE a, b, c BEGIN
+                                        READ a;
+                                        READ b;
+                                        c ASSIGN a DIV b;
+                                        WRITE c;
+                                        END
+                                         """
+        a = b'0 5'
+        out, err, asm, cost = run_vm(simple_program_string, input=a)
+        assert err is b''
+        assert int(out[0]) == 0
+
+    def test_equal_stuff(self):
+        simple_program_string = """
+                                        DECLARE a, b, c BEGIN
+                                        READ a;
+                                        READ b;
+                                        c ASSIGN a DIV b;
+                                        WRITE c;
+                                        END
+                                         """
+        a = b'17 17'
+
+        out, err, asm, cost = run_vm(simple_program_string, input=a)
+        assert err is b''
+        assert int(out[0]) == 1
+
+    def test_ina_loop(self):
+        simple_program_string = """
+                                DECLARE a, b, c BEGIN
+                                FOR i FROM 0 TO 3 DO
+                                READ a;
+                                READ b;
+                                c ASSIGN a DIV b;
+                                WRITE c;
+                                ENDFOR
+                                END
+                                 """
+        # a = b'-7 -2 0 5 121 11 17 17'
+        a = b'0 5 0 5 121 11 17 17'
+
+        out, err, asm, cost = run_vm(simple_program_string, input=a)
+        assert err is b''
+        assert int(out[0]) == 0
+        assert int(out[1]) == 0
+        assert int(out[2]) == 11
+        assert int(out[3]) == 1

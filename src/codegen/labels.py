@@ -28,6 +28,36 @@ DIV_ISNEG_BOTH_NEG_LABEL = 'ISNEG_BOTH_NEG'
 DIV_ISNEG_END_LABEL = 'ISNEG_END'
 
 DIV_NOTHING_TO_BE_DONE_IN_FINALIZE = 'NOTHING_TO_BE_DONE_IN_FINALIZE'
+MOD_REMAINDER_NEGATIVE = 'REMAINDER_NEGATIVE'
+MOD_END_REMAINDER_NEGATIVE_CHECK = 'REMAINDER_NEGATIVE_CHECK_END'
+MOD_REM_POSITIVE = 'REM_POSITIVE'
+MOD_DO_NOT_COMPLEMENT = 'DO_NOT_COMPLEMENT'
+REM_MUST_BE_NEG = 'REM_MUST_BE_NEG'
+REM_FIXING_END = 'REM_FIXING_END'
+
+
+def rem_fixing_end_label(id):
+    return f'#{REM_FIXING_END}_{id}\n'
+
+
+def rem_must_be_neg_label(id):
+    return f'#{REM_MUST_BE_NEG}_{id}\n'
+
+
+def mod_do_not_complement_label(id):
+    return f'#{MOD_DO_NOT_COMPLEMENT}_{id}\n'
+
+
+def mod_rem_positive_label(id):
+    return f'#{MOD_REM_POSITIVE}_{id}\n'
+
+
+def mod_end_remainder_negative_check_label(id):
+    return f'#{MOD_END_REMAINDER_NEGATIVE_CHECK}_{id}\n'
+
+
+def mod_remainder_negative_label(id):
+    return f'#{MOD_REMAINDER_NEGATIVE}_{id}\n'
 
 
 def div_nothing_to_be_done_in_finalize_label(id):

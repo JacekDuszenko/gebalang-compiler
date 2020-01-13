@@ -210,6 +210,7 @@ TWO_POW_REG = 8
 ONE_CONST_REG = 9
 TEMP_VAL_REG = 10
 IS_NEG_REG = 11
+IS_REM_NEG = 12
 
 
 def execute_division(codegen):
@@ -228,7 +229,7 @@ def execute_division(codegen):
     code = ""
 
     code += detect_division_by_zero(id)
-    code += initialize_constant_one(id)
+    code += initialize_constant_one_and_clear_sum(id)
     code += determine_isneg(id)
     code += div_outer_loop(id)
     code += div_zero_label(id)
@@ -255,7 +256,7 @@ def determine_isneg(id):
     code += f"SUB 0\n"
     code += f"SUB {RIGHT_VALUE_REG}\n"
     code += f"STORE {RIGHT_VALUE_REG}\n"
-    code += mark_as_negative(id) #left is positive, right is negative
+    code += mark_as_negative(id)  # left is positive, right is negative
 
     code += div_isneg_both_neg_label(id)
     code += "SUB 0\n"
@@ -284,28 +285,61 @@ def mark_as_negative(id):
     return code
 
 
-def initialize_constant_one(id):
+def initialize_constant_one_and_clear_sum(id):
     code = ""
     code += "SUB 0\n"
+    code += f"STORE {SUM_REG}\n"
     code += "INC \n"
     code += f"STORE {ONE_CONST_REG}\n"
     return code
 
 
-def div_outer_loop(id):
+def div_outer_loop(id, is_modulus=False):
     code = ""
     code += f"{div_outer_loop_label(id)}"
     code += evaluate_exit_outer_loop_condition(id)
     code += initialize_max_twopow_loop(id)
     code += max_twopow_loop(id)
-    code += outer_loop_finalize_eval(id)
+    if is_modulus:
+        code += outer_loop_finalize_eval_mod(id)
+    else:
+        code += outer_loop_finalize_eval_div(id)
     return code
 
 
-def outer_loop_finalize_eval(id):
+def outer_loop_finalize_eval_mod(id):
     code = ""
     code += f"{div_finalize_label(id)}"
-    code += f"LOAD {LEFT_VALUE_REG}\n" # remainder
+    code += f"LOAD {IS_NEG_REG}\n"  # if is neg, we need to do complement
+
+    code += f"JZERO {mod_do_not_complement_label(id)}"
+    code += f"LOAD {LEFT_VALUE_REG}\n"  # complement the remainder
+    code += f"SUB {RIGHT_VALUE_REG}\n"
+    code += f"STORE {LEFT_VALUE_REG}\n"
+
+    code += mod_do_not_complement_label(id)
+    code += f"LOAD {IS_REM_NEG}\n"  # fix the sign
+    code += f"JPOS {rem_must_be_neg_label(id)}"
+    code += f"LOAD {LEFT_VALUE_REG}\n"  # remainder must be positive
+    code += f"JPOS {rem_fixing_end_label(id)}"  # end if it is
+
+    code += f"SUB 0\n"  # if it is not flip its sign
+    code += f"SUB {LEFT_VALUE_REG}\n"
+    code += f"JUMP {rem_fixing_end_label(id)}"
+
+    code += rem_must_be_neg_label(id)
+    code += f"LOAD {LEFT_VALUE_REG}\n"
+    code += f"JNEG {rem_fixing_end_label(id)}"  # if it is neg its okay
+    code += f"SUB 0\n"  # else flip its sign
+    code += f"SUB {LEFT_VALUE_REG}\n"
+    code += rem_fixing_end_label(id)
+    return code
+
+
+def outer_loop_finalize_eval_div(id):
+    code = ""
+    code += f"{div_finalize_label(id)}"
+    code += f"LOAD {LEFT_VALUE_REG}\n"  # remainder
     code += f"STORE {TEMP_VAL_REG}\n"
     code += f"LOAD {IS_NEG_REG}\n"
     code += f"JZERO {div_nothing_to_be_done_in_finalize_label(id)}"
@@ -394,7 +428,45 @@ def detect_division_by_zero(id):
 
 
 def execute_modulus(codegen):
-    pass
+    """
+       R4 - left value
+       R5 - right value
+       R6 - r copy = rcp
+       R7 - total quotient sum = sum
+       R8 - current 2 pow - two_pow
+       R9 - number one constant value
+       R10 - temp value
+       R11 - is negative flag
+       R12 - rem negative flag
+       """
+
+    id = get_id()
+    code = ""
+    code += detect_division_by_zero(id)
+    code += initialize_constant_one_and_clear_sum(id)
+
+    code += check_remainder_negative(id)
+
+    code += determine_isneg(id)
+    code += div_outer_loop(id, is_modulus=True)
+    code += div_zero_label(id)
+    return code
+
+
+def check_remainder_negative(id):
+    code = ""
+    code += f"LOAD {RIGHT_VALUE_REG}\n"
+    code += f"JPOS {mod_rem_positive_label(id)}"
+    code += f"SUB 0\n"
+    code += f"INC\n"
+    code += f"STORE {IS_REM_NEG}\n"
+    code += f"JUMP {mod_end_remainder_negative_check_label(id)}"
+    code += mod_rem_positive_label(id)
+    code += f"SUB 0 \n"
+    code += f"STORE {IS_REM_NEG}\n"
+    code += mod_end_remainder_negative_check_label(id)
+
+    return code
 
 
 def compute_and_store_constant_in_memory(l, r, operator):
