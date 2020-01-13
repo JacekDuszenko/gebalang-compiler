@@ -1,31 +1,8 @@
-   [ Rozklad liczby 340282367713220089251654026161790386200 na czynniki pierwsze ]
-[ Oczekiwany wynik:
-  2^3
-  3
-  5^2
-  7
-  13
-  41
-  61
-  641
-  1321
-  6700417
-  613566757
-  715827883
-]
+[ Rozklad liczby na czynniki pierwsze ]
 DECLARE
-    a(0:3),
     n, m, reszta, potega, dzielnik
 BEGIN
-    a(0) ASSIGN 4294967297;
-    a(1) ASSIGN 4294967298;
-    a(2) ASSIGN 4294967299;
-    a(3) ASSIGN 4294967300;
-
-    n ASSIGN a(0) TIMES a(1);
-    n ASSIGN n TIMES a(2);
-    n ASSIGN n TIMES a(3);
-
+    READ n;
     dzielnik ASSIGN 2;
     m ASSIGN dzielnik TIMES dzielnik;
     WHILE n GEQ m DO

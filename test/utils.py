@@ -52,14 +52,14 @@ def write_vm_code_to_file(vm_code):
     return filename
 
 
-def run_vm(simple_program_string, input=None, delete_assembly=True):
+def run_vm(simple_program_string, input=None, delete_assembly=True, on_cln=False):
     ptree = parse(simple_program_string)
     globals = execute_static_analysis(ptree)
     codegen = create_code_generator(ptree, globals)
     vm_code = codegen.generate_vm_code()
-    print(vm_code)
     filename = write_vm_code_to_file(vm_code)
-    ps = subprocess.run(['../maszyna-wirtualna', filename], capture_output=True, input=input)
+    ps = subprocess.run(['../maszyna-wirtualna', filename], capture_output=True, input=input) if not on_cln else \
+    subprocess.run(['../maszyna-wirtualna-cln', filename], capture_output=True, input=input)
     if delete_assembly:
         os.remove(filename)
     lines = [l.decode('utf-8') for l in ps.stdout.split(b'\n')]

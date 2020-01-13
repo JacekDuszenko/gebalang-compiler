@@ -15,8 +15,12 @@ def compile_gebalang(code):
     declarations = execute_static_analysis(ptree)
     codegen = create_code_generator(ptree, declarations)
     vm_code = codegen.generate_vm_code()
-    print(vm_code)
     return vm_code
+
+
+def write_vm_code_to_file():
+    f = open(sys.argv[2], "w+")
+    f.write(vm_code)
 
 
 if __name__ == "__main__":
@@ -24,6 +28,7 @@ if __name__ == "__main__":
     with open(sys.argv[1]) as in_file:
         code = in_file.read()
         try:
-            compile_gebalang(code)
+            vm_code = compile_gebalang(code)
+            write_vm_code_to_file()
         except GebalangException:
             exit(1)

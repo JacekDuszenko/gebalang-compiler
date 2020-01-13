@@ -40,12 +40,3 @@ HALT   { yylval = HALT; return STOP; };
 \n     ;
 .      { return ERROR; }
 %%
-
-
-line :
-    COM_0 		{ program.push_back( std::make_pair($1,0) ); }
-  | COM_1 LABEL 	{ program.push_back( std::make_pair($1,$2) ); }
-  | JUMP_1 LABEL 	{ program.push_back( std::make_pair($1,$2) ); }
-  | STOP 		{ program.push_back( std::make_pair($1,0) ); }
-  | ERROR 		{ yyerror( program, "Nierozpoznany symbol" ); }
-  ;

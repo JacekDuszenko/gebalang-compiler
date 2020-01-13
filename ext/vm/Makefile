@@ -1,4 +1,4 @@
-FLAGS = -W -pedantic -std=c++17 -O3
+FLAGS = -W -pedantic -std=c++17 -O3 -I/usr/local/include
 
 .PHONY = all clean cleanall
 

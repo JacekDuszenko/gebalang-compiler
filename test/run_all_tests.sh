@@ -1,1 +1,1 @@
-pytest codegen lexer parser sa
+pytest codegen lexer parser sa general
