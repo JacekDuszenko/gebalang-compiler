@@ -1,5 +1,4 @@
 import sys
-
 from src.codegen.codegen_factory import create_code_generator
 from src.lexer import lexer
 from src.parser import parser
