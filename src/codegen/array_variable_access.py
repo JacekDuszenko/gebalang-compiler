@@ -14,7 +14,7 @@ def load_array_variable_addr(codegen, identifier):
 
     code += store_array_start_index_in_one(array_start_index)
 
-    array_start_addr = array_dec.addr[0]
+    array_start_addr = array_dec.addr
     code += store_array_start_index_addr_in_two(array_start_addr)
 
     accessor_variable_name = identifier.accessor

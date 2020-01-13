@@ -50,7 +50,7 @@ class ArrayDeclaration:
         self.end_index = end
         self.line = line
         self.local = local
-        self.initialized = [False for _ in range(start, end + 1)]
+        self.initialized = True
         self.addr = []
 
     @staticmethod

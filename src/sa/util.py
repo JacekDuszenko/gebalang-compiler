@@ -53,15 +53,13 @@ def mark_as_initialized(scope, variable_node):
         scope[variable_name].initialized = True
     if isinstance(variable_node, IdentifierArrayNumber):
         shifted_index = abs(scope[variable_name].start_index - variable_node.accessor)
-        scope[variable_name].initialized[shifted_index] = True
+        scope[variable_name].initialized = True
     if isinstance(variable_node, IdentifierArrayVariable):
         set_all_array_elems_to_initialized(scope, variable_name)
 
 
 def set_all_array_elems_to_initialized(scope, variable_name):
-    array_length = len(scope[variable_name].initialized)
-    for i in range(0, array_length):
-        scope[variable_name].initialized[i] = True
+    scope[variable_name].initialized = True
 
 
 def validate_loop_iterator_modification(scope, variable_node):
@@ -80,7 +78,7 @@ def validate_initialized(scope, variable_node):
             error(variable_node.line, variable_not_initialized(variable_name))
     if isinstance(variable_node, IdentifierArrayNumber):
         shifted_index = abs(scope[variable_name].start_index - variable_node.accessor)
-        if not dec.initialized[shifted_index]:
+        if not dec.initialized:
             error(variable_node, variable_not_initialized(f'{variable_name}({variable_node.accessor})'))
     if isinstance(variable_node, IdentifierArrayVariable):
         pass  # too complicated for this compiler

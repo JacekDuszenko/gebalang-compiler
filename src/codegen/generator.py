@@ -30,7 +30,7 @@ class CodeGenerator:
         if isinstance(dec, VariableDeclaration):
             return dec.addr
         if isinstance(dec, ArrayDeclaration):
-            return dec.addr[index]
+            return dec.addr + index
 
     def get_declaration_by_variable_name(self, variable_name):
         dec = self.vpool.pool[variable_name]

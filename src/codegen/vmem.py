@@ -1,5 +1,5 @@
 STARTING_MEMORY = 13
-ENDING_MEMORY = 2 ** 62 -1
+ENDING_MEMORY = 2 ** 62 - 1
 
 
 class VirtualMemory:
@@ -17,7 +17,7 @@ class VirtualMemory:
 
     def pop_local_variable(self):
         self.local_memory_counter += 1
-        del(self.memory[self.local_memory_counter])
+        del (self.memory[self.local_memory_counter])
 
     def allocate_memory_for_variable(self, variable_name, variable_declaration):
         var_cell = VariableMemoryCell(variable_declaration, variable_name, self.memory_counter)
@@ -36,14 +36,11 @@ class VirtualMemory:
     def allocate_memory_for_array(self, declaration, variable_name):
         start_index = declaration.start_index
         end_index = declaration.end_index
-        result = []
-        for i in range(start_index, end_index + 1):
-            var = ArrayMemoryCell(declaration, variable_name, self.memory_counter)
-            self.memory[self.memory_counter] = var
-            result.append(self.memory_counter)
-            self.memory_counter += 1
-        declaration.addr = result
-        return result
+        var = ArrayMemoryCell(declaration, variable_name, self.memory_counter)
+        self.memory[self.memory_counter] = var
+        declaration.addr = self.memory_counter
+        self.memory_counter += end_index - start_index + 1
+        return var
 
 
 class MemoryCell:

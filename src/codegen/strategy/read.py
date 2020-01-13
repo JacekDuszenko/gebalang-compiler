@@ -33,7 +33,7 @@ def find_variable_addr(variable_node, codegen):
         return str(dec.addr)
     if isinstance(variable_node, IdentifierArrayNumber):
         shifted_index = abs(dec.start_index - variable_node.accessor)
-        return dec.addr[shifted_index]
+        return dec.addr + shifted_index
 
 
 def store_variable_addr_to_one():
