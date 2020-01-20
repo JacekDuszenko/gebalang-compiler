@@ -5,12 +5,13 @@ class TestWriteConstant:
     def test_should_generate_valid_constant_20(self):
         simple_program_string = """
                                  BEGIN
-                                 WRITE 10;
+                                 WRITE 20;
                                  END
                                  """
         out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
-        assert int(out[0]) == 10
+        assert int(out[0]) == 20
+        print('cost is: ', cost)
 
     def test_should_generate_valid_constant_0(self):
         simple_program_string = """
@@ -30,6 +31,8 @@ class TestWriteConstant:
                                     """
         out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
+        print(asm)
+
         assert int(out[0]) == -500
 
     def test_should_generate_valid_constant_2_to_62(self):
@@ -42,6 +45,7 @@ class TestWriteConstant:
         out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
         assert int(out[0]) == 2 ** 62
+        print('cost is: ', cost)
 
     def test_should_generate_valid_constant_minus_2_to_62(self):
         two_to_sixty_two = str(-2 ** 62)
@@ -62,6 +66,7 @@ class TestWriteConstant:
                                     """
         out, err, asm, cost =  run_vm(simple_program_string)
         assert err is b''
+        print(asm)
         assert int(out[0]) == -3
 
     def test_should_generate_valid_constant_couple_times(self):

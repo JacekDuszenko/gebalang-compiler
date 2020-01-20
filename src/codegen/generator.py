@@ -1,4 +1,5 @@
 from src.ast import *
+from src.codegen.create_constant import place_one_in_onereg
 from src.codegen.labels import resolve_labels
 from src.codegen.visitor import CodeGenVisitor
 
@@ -21,9 +22,12 @@ class CodeGenerator:
     @append_halt
     def generate_vm_code(self):
         cg = CodeGenVisitor(self)
+        code = ""
+        code += place_one_in_onereg()
         code_without_labels = cg.visit(self.ptree.commands)
+        code += code_without_labels
         # print(code_without_labels)
-        return resolve_labels(code_without_labels)
+        return resolve_labels(code)
 
     def get_address_by_variable_name(self, variable_name, index=None):
         dec = self.vpool.pool[variable_name]

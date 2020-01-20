@@ -246,6 +246,7 @@ END
         assert err is b''
         assert int(out[0]) == 121393
         print('\n2-fib, cost: ', cost)
+        print(asm)
 
     def test_three_fib_factorial(self):
         simple_program_string = """
