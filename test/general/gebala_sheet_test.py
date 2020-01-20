@@ -106,6 +106,7 @@ END
         valid_number_reversed = valid_number[::-1]
         assert err is b''
         for i, o in enumerate(out):
+            print(o)
             assert o == valid_number_reversed[i]
         print('\nprogram-0, cost: ', cost)
 
@@ -139,6 +140,8 @@ END
         assert int(out[1]) == 0
         assert int(out[2]) == 0
         assert int(out[3]) == 0
+        for o in out:
+            print(o)
         print('\n0-div-mod, cost: ', cost)
 
     def test_one_numbers(self):
@@ -186,8 +189,8 @@ END
                     WRITE tab(0); [ 7777 ]
                     END
                                  """
-        h = -1337
-        a = b'-1337'
+        h = 20
+        a = b'20'
         out, err, asm, cost = run_vm(simple_program_string, input=a)
         assert err is b''
         print('\n1-numbers, cost: ', cost)
@@ -195,6 +198,7 @@ END
         valid_result = [0, 1, -2, 10, -100, 10000, -1234567890, \
                         15 + h, 15, -999, -555555555, 7777, -999, 11, 707, 7777]
         for i, o in enumerate(out):
+            print(o)
             assert int(o) == valid_result[i]
 
     def test_two_fib(self):
@@ -245,8 +249,9 @@ END
         out, err, asm, cost = run_vm(simple_program_string, input=a)
         assert err is b''
         assert int(out[0]) == 121393
+        for o in out:
+            print(o)
         print('\n2-fib, cost: ', cost)
-        print(asm)
 
     def test_three_fib_factorial(self):
         simple_program_string = """
@@ -282,6 +287,8 @@ END
         assert err is b''
         assert int(out[0]) == 2432902008176640000
         assert int(out[1]) == 6765
+        for o in out:
+            print(o)
         print('\n3-fib-factorial, cost: ', cost)
 
     def test_four_factorial(self):
@@ -315,6 +322,8 @@ END
         out, err, asm, cost = run_vm(simple_program_string, input=a)
         assert err is b''
         assert int(out[0]) == 2432902008176640000
+        for o in out:
+            print(o)
         print('\n4-factorial, cost: ', cost)
 
     def test_five_tab(self):
@@ -378,6 +387,8 @@ END
         out, err, asm, cost = run_vm(simple_program_string, input=a)
         assert err is b''
         assert int(out[0]) == 674106858
+        for o in out:
+            print(o)
         print('\n6-mod-mult, cost: ', cost)
 
     def test_seven_loop_three(self):
@@ -416,6 +427,8 @@ END
         assert int(out[0]) == 31000
         assert int(out[1]) == 40900
         assert int(out[2]) == 2222010
+        for o in out:
+            print(o)
         print('\n7-loop-3, cost, first subtest: ', cost)
 
         a = b'1 0 2'
@@ -460,6 +473,8 @@ END
         assert int(out[0]) == 507
         assert int(out[1]) == 4379
         assert int(out[2]) == 0
+        for o in out:
+            print(o)
         print('\n8-for, cost: ', cost)
 
     def test_nine_sort(self):
